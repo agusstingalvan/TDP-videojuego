@@ -1,6 +1,7 @@
 import Precarga from "../scenes/Precarga.js";
 import Inicio from "../scenes/Inicio.js";
 import Ayuda from "../scenes/Ayuda.js";
+import Creditos from "../scenes/Creditos.js";
 import SeleccionPersonajes from "../scenes/SeleccionPersonajes.js";
 import Tablero from "../scenes/Tablero.js";
 import Ganador from "../scenes/Ganador.js";
@@ -28,5 +29,5 @@ export const config = {
       debug: false,
     },
   },
-  scene: [Precarga, Inicio, Ayuda, SeleccionPersonajes, Tablero, Ganador],
+  scene: [Precarga, Inicio, Ayuda, Creditos, SeleccionPersonajes, Tablero, Ganador],
 };
