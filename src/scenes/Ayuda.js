@@ -6,7 +6,7 @@ export default class Ayuda extends Phaser.Scene{
 
     }
     create(){
-        this.add.text(760, 20, "X", {backgroundColor: 'white', color: "black"}).setInteractive().on("pointerdown", ()=>this.scene.start("Inicio"));
+        this.add.image(760, 20, "btnFlechaDerecha", {backgroundColor: 'white', color: "black"}).setInteractive().on("pointerdown", ()=>this.scene.start("Inicio")).setScale(0.4)
         
     }
 }
