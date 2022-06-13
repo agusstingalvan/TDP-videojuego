@@ -3,42 +3,42 @@
 // let player1, player2, player3, player4;
 
 let stringName = "";
+let canEdit = true;
+let players = {
+    player1: {
+        name: "Jugador 1",
+        x: 150,
+        y: 300,
+        color: "0x32a852",
+        texture: "duckWhite",
+    },
+    player2: {
+        name: "Jugador 2",
+        x: 325,
+        y: 300,
+        color: "0xa8323a",
+        texture: "duckWhite",
+    },
+    player3: {
+        name: "Jugador 3",
+        x: 500,
+        y: 300,
+        color: "0xedd500",
+        texture: "duckWhite",
+    },
+    player4: {
+        name: "Jugador 4",
+        x: 675,
+        y: 300,
+        color: "0x000ced",
+        texture: "duckWhite",
+    },
+};
 export default class SeleccionPersonajes extends Phaser.Scene {
     constructor() {
         super("SeleccionPersonajes");
     }
     create() {
-        let players = {
-            player1: {
-                name: "Jugador 1",
-                x: 150,
-                y: 300,
-                color: "0x32a852",
-                texture: "duckWhite",
-            },
-            player2: {
-                name: "Jugador 2",
-                x: 325,
-                y: 300,
-                color: "0xa8323a",
-                texture: "duckWhite",
-            },
-            player3: {
-                name: "Jugador 3",
-                x: 500,
-                y: 300,
-                color: "0xedd500",
-                texture: "duckWhite",
-            },
-            player4: {
-                name: "Jugador 4",
-                x: 675,
-                y: 300,
-                color: "0x000ced",
-                texture: "duckWhite",
-            },
-        };
-
         for (let player in players) {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
@@ -83,7 +83,9 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         btnReady.visible = false;
 
         btnEdit.on("pointerdown", () => {
-            playerObj.setName = "";
+            if (!canEdit) return;
+            canEdit = false;
+            // playerObj.name = "";
             nameText.setText("Escriba...");
             nameText.setColor("red");
             stringName = "";
@@ -92,11 +94,14 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             btnReady.visible = true;
         });
         btnReady.on("pointerdown", () => {
+            canEdit = true;
             btnEdit.visible = true;
             btnReady.visible = false;
             nameText.setColor("white");
             window.removeEventListener("keydown", writeName);
-            console.log(playerObj.name);
+            if (nameText.text === "Escriba...") {
+                nameText.setText(playerObj.name);
+            }
         });
 
         function writeName(e) {
