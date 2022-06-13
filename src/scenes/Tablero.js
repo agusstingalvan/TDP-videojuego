@@ -12,7 +12,12 @@ export default class Tablero extends Phaser.Scene {
     players = data.players
   }
   create() {
+    let map = this.make.tilemap({key: 'map_tablero'});
+    const tiledBackground = map.addTilesetImage('fondo-tablero', 'tiledBackground');
+    const tiledCasillas = map.addTilesetImage('casillas-atlas', 'tiledCasillas');
 
+    const sky = map.createLayer('fondo', tiledBackground, 0, 0)
+    const casillas = map.createLayer('casillas', tiledCasillas, 0, 0)
     let player1 = players.player1;
     let player2 = players.player2;
     let player3 = players.player3;
@@ -21,7 +26,7 @@ export default class Tablero extends Phaser.Scene {
     player1 = new Player(this, 100, 500, player1.texture, null, player1.name, player1.color);
     // let player1 = new Player(this, 150, 300, "duckWhite", null)
     // player = this.add.image(100, 550, "duck");
-    // this.add.text(0, 0, "Estas en el tablero");
+    this.add.text(0, 0, player1.name);
     this.add
       .text(500, 500, "TirarDado")
       .setInteractive()
@@ -59,4 +64,4 @@ export default class Tablero extends Phaser.Scene {
   }
 }
 
-//tirar dado, moverse, usar powerUp, usarCasilla.
+//tirar dado, moverse, usar powerUp, usarCasilla, cronometro.

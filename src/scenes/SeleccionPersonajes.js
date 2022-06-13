@@ -83,6 +83,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         btnReady.visible = false;
 
         btnEdit.on("pointerdown", () => {
+            //Primero verifico si no hay ningun otro editandoce.
             if (!canEdit) return;
             canEdit = false;
             // playerObj.name = "";
