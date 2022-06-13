@@ -1,14 +1,27 @@
+import Player from "../js/objects/Player.js";
+
 let numeroDelDado = 0,
   textDado,
-  player;
+  players,
+  player
 export default class Tablero extends Phaser.Scene {
   constructor() {
     super("Tablero");
   }
-  preload() {}
+  init(data){
+    players = data.players
+  }
   create() {
-    player = this.add.image(100, 550, "duck");
-    this.add.text(0, 0, "Estas en el tablero");
+
+    let player1 = players.player1;
+    let player2 = players.player2;
+    let player3 = players.player3;
+    let player4 = players.player4;
+
+    player1 = new Player(this, 100, 500, player1.texture, null, player1.name, player1.color);
+    // let player1 = new Player(this, 150, 300, "duckWhite", null)
+    // player = this.add.image(100, 550, "duck");
+    // this.add.text(0, 0, "Estas en el tablero");
     this.add
       .text(500, 500, "TirarDado")
       .setInteractive()

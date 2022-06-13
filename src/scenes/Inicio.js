@@ -2,8 +2,6 @@ export default class Inicio extends Phaser.Scene{
     constructor(){
         super("Inicio");
     }
-    preload(){
-    }
     create(){
         this.add.image(400, 100, "duck")
         this.add.image(400, 300, "btnJugar").setInteractive().on("pointerdown", ()=>this.scene.start("SeleccionPersonajes")).setOrigin(0.5)
