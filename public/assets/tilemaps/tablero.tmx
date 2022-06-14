@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="80" tileheight="80" infinite="0" nextlayerid="4" nextobjectid="61">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="80" tileheight="80" infinite="0" nextlayerid="6" nextobjectid="239">
+ <editorsettings>
+  <export target="tablero.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="fondo-tablero" tilewidth="80" tileheight="80" tilecount="144" columns="16">
   <image source="../images/fondo-tablero.jpg" width="1280" height="720"/>
  </tileset>
  <tileset firstgid="145" name="casillas-atlas" tilewidth="80" tileheight="80" tilecount="6" columns="3">
   <image source="../images/casillas-atlas.png" width="240" height="160"/>
+  <tile id="0">
+   <properties>
+    <property name="overlap" type="bool" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="1" name="fondo" width="16" height="9">
   <data encoding="csv">
@@ -21,7 +29,7 @@
  </layer>
  <layer id="2" name="casillas" width="16" height="9">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,142,142,142,0,0,0,0,
 0,146,149,148,146,148,145,146,147,145,146,148,145,146,145,0,
 0,147,0,0,0,0,0,0,0,0,0,0,0,0,148,0,
 0,145,0,147,146,145,145,146,145,145,0,0,0,0,146,0,
@@ -33,141 +41,6 @@
 </data>
  </layer>
  <objectgroup id="3" name="objetos">
-  <object id="3" type="casilla" x="120" y="600">
-   <point/>
-  </object>
-  <object id="4" type="casilla" x="120" y="520">
-   <point/>
-  </object>
-  <object id="5" type="casilla" x="120" y="440">
-   <point/>
-  </object>
-  <object id="6" type="casilla" x="120" y="360">
-   <point/>
-  </object>
-  <object id="7" type="casilla" x="120" y="280">
-   <point/>
-  </object>
-  <object id="8" type="casilla" x="120" y="200">
-   <point/>
-  </object>
-  <object id="9" type="casilla" x="120" y="120">
-   <point/>
-  </object>
-  <object id="10" type="casilla" x="200" y="120">
-   <point/>
-  </object>
-  <object id="11" type="casilla" x="280" y="120">
-   <point/>
-  </object>
-  <object id="12" type="casilla" x="360" y="120">
-   <point/>
-  </object>
-  <object id="13" type="casilla" x="440" y="120">
-   <point/>
-  </object>
-  <object id="14" type="casilla" x="520" y="120">
-   <point/>
-  </object>
-  <object id="15" type="casilla" x="600" y="120">
-   <point/>
-  </object>
-  <object id="16" type="casilla" x="680" y="120">
-   <point/>
-  </object>
-  <object id="17" type="casilla" x="760" y="120">
-   <point/>
-  </object>
-  <object id="18" type="casilla" x="840" y="120">
-   <point/>
-  </object>
-  <object id="19" type="casilla" x="920" y="120">
-   <point/>
-  </object>
-  <object id="20" type="casilla" x="1000" y="120">
-   <point/>
-  </object>
-  <object id="21" type="casilla" x="1080" y="120">
-   <point/>
-  </object>
-  <object id="22" type="casilla" x="1160" y="120">
-   <point/>
-  </object>
-  <object id="23" type="casilla" x="1160" y="200">
-   <point/>
-  </object>
-  <object id="24" type="casilla" x="1160" y="280">
-   <point/>
-  </object>
-  <object id="25" type="casilla" x="1160" y="360">
-   <point/>
-  </object>
-  <object id="26" type="casilla" x="1160" y="440">
-   <point/>
-  </object>
-  <object id="27" type="casilla" x="1160" y="520">
-   <point/>
-  </object>
-  <object id="28" type="casilla" x="1080" y="520">
-   <point/>
-  </object>
-  <object id="29" type="casilla" x="1000" y="520">
-   <point/>
-  </object>
-  <object id="30" type="casilla" x="920" y="520">
-   <point/>
-  </object>
-  <object id="31" type="casilla" x="840" y="520">
-   <point/>
-  </object>
-  <object id="32" type="casilla" x="760" y="520">
-   <point/>
-  </object>
-  <object id="33" type="casilla" x="680" y="520">
-   <point/>
-  </object>
-  <object id="34" type="casilla" x="600" y="520">
-   <point/>
-  </object>
-  <object id="35" type="casilla" x="520" y="520">
-   <point/>
-  </object>
-  <object id="36" type="casilla" x="440" y="520">
-   <point/>
-  </object>
-  <object id="37" type="casilla" x="360" y="520">
-   <point/>
-  </object>
-  <object id="38" type="casilla" x="280" y="520">
-   <point/>
-  </object>
-  <object id="39" type="casilla" x="280" y="440">
-   <point/>
-  </object>
-  <object id="40" type="casilla" x="280" y="360">
-   <point/>
-  </object>
-  <object id="41" type="casilla" x="280" y="280">
-   <point/>
-  </object>
-  <object id="42" type="casilla" x="360" y="280">
-   <point/>
-  </object>
-  <object id="43" type="casilla" x="440" y="280">
-   <point/>
-  </object>
-  <object id="44" type="casilla" x="520" y="280">
-   <point/>
-  </object>
-  <object id="45" type="casilla" x="600" y="280">
-   <point/>
-  </object>
-  <object id="46" type="casilla" x="680" y="280">
-   <point/>
-  </object>
-  <object id="47" type="casilla" x="760" y="280">
-   <point/>
-  </object>
   <object id="48" name="jugador1" type="jugadores" x="120" y="600">
    <point/>
   </object>
@@ -193,6 +66,143 @@
    <point/>
   </object>
   <object id="60" name="opciones" x="1240" y="40">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="casillas">
+  <object id="193" type="vacia" x="122.213" y="537.976">
+   <point/>
+  </object>
+  <object id="194" type="consecuencia" x="122.213" y="457.976">
+   <point/>
+  </object>
+  <object id="195" type="dinero" x="122.213" y="377.976">
+   <point/>
+  </object>
+  <object id="196" type="vacia" x="122.213" y="297.976">
+   <point/>
+  </object>
+  <object id="197" type="tienda" x="122.213" y="217.976">
+   <point/>
+  </object>
+  <object id="198" type="dinero" x="122.213" y="137.976">
+   <point/>
+  </object>
+  <object id="199" type="vacaciones" x="202.213" y="137.976">
+   <point/>
+  </object>
+  <object id="200" type="consecuencia" x="282.213" y="137.976">
+   <point/>
+  </object>
+  <object id="201" type="dinero" x="362.213" y="137.976">
+   <point/>
+  </object>
+  <object id="202" type="consecuencia" x="442.213" y="137.976">
+   <point/>
+  </object>
+  <object id="203" type="vacia" x="522.213" y="137.976">
+   <point/>
+  </object>
+  <object id="204" type="dinero" x="602.213" y="137.976">
+   <point/>
+  </object>
+  <object id="205" type="tienda" x="682.213" y="137.976">
+   <point/>
+  </object>
+  <object id="206" type="vacia" x="762.213" y="137.976">
+   <point/>
+  </object>
+  <object id="207" type="dinero" x="842.213" y="137.976">
+   <point/>
+  </object>
+  <object id="208" type="consecuencia" x="922.213" y="137.976">
+   <point/>
+  </object>
+  <object id="209" type="casilla" x="1002.21" y="137.976">
+   <point/>
+  </object>
+  <object id="210" type="dinero" x="1082.21" y="137.976">
+   <point/>
+  </object>
+  <object id="211" type="vacia" x="1162.21" y="137.976">
+   <point/>
+  </object>
+  <object id="212" type="consecuencia" x="1162.21" y="217.976">
+   <point/>
+  </object>
+  <object id="213" type="dinero" x="1162.21" y="297.976">
+   <point/>
+  </object>
+  <object id="214" type="vacaciones" x="1162.21" y="377.976">
+   <point/>
+  </object>
+  <object id="215" type="vacia" x="1162.21" y="457.976">
+   <point/>
+  </object>
+  <object id="216" type="dinero" x="1162.21" y="537.976">
+   <point/>
+  </object>
+  <object id="217" type="tienda" x="1082.21" y="537.976">
+   <point/>
+  </object>
+  <object id="218" type="vacia" x="1002.21" y="537.976">
+   <point/>
+  </object>
+  <object id="219" type="dinero" x="922.213" y="537.976">
+   <point/>
+  </object>
+  <object id="220" type="consecuencia" x="842.213" y="537.976">
+   <point/>
+  </object>
+  <object id="221" type="vacia" x="762.213" y="537.976">
+   <point/>
+  </object>
+  <object id="222" type="dinero" x="682.213" y="537.976">
+   <point/>
+  </object>
+  <object id="223" type="consecuencia" x="602.213" y="537.976">
+   <point/>
+  </object>
+  <object id="224" type="vacia" x="522.213" y="537.976">
+   <point/>
+  </object>
+  <object id="225" type="dinero" x="442.213" y="537.976">
+   <point/>
+  </object>
+  <object id="226" type="vacia" x="362.213" y="537.976">
+   <point/>
+  </object>
+  <object id="227" type="vacaciones" x="282.213" y="537.976">
+   <point/>
+  </object>
+  <object id="228" type="dinero" x="282.213" y="457.976">
+   <point/>
+  </object>
+  <object id="229" type="consecuencia" x="282.213" y="377.976">
+   <point/>
+  </object>
+  <object id="230" type="tienda" x="282.213" y="297.976">
+   <point/>
+  </object>
+  <object id="231" type="dinero" x="362.213" y="297.976">
+   <point/>
+  </object>
+  <object id="232" type="vacia" x="442.213" y="297.976">
+   <point/>
+  </object>
+  <object id="233" type="vacia" x="522.213" y="297.976">
+   <point/>
+  </object>
+  <object id="234" type="casilla" x="602.213" y="297.976">
+   <point/>
+  </object>
+  <object id="235" type="vacia" x="682.213" y="297.976">
+   <point/>
+  </object>
+  <object id="236" name="Meta" x="762.213" y="297.976">
+   <point/>
+  </object>
+  <object id="237" name="Salida" x="118.667" y="614.667">
    <point/>
   </object>
  </objectgroup>

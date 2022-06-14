@@ -137,7 +137,6 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             let string = stringName.charAt(0).toUpperCase() + stringName.slice(1);
             nameText.setText(string);
             playerObj.name = string;
-
         }
     }
 }

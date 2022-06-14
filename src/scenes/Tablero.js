@@ -12,12 +12,14 @@ export default class Tablero extends Phaser.Scene {
     players = data.players
   }
   create() {
+
     let map = this.make.tilemap({key: 'map_tablero'});
     const tiledBackground = map.addTilesetImage('fondo-tablero', 'tiledBackground');
     const tiledCasillas = map.addTilesetImage('casillas-atlas', 'tiledCasillas');
 
-    const sky = map.createLayer('fondo', tiledBackground, 0, 0)
-    const casillas = map.createLayer('casillas', tiledCasillas, 0, 0)
+    const sky = map.createLayer('fondo', tiledBackground, 0, 0);
+    const casillas = map.createLayer('casillas', tiledCasillas, 0, 0);
+
     let player1 = players.player1;
     let player2 = players.player2;
     let player3 = players.player3;
