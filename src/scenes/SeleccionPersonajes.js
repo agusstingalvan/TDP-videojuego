@@ -106,12 +106,38 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         });
 
         function writeName(e) {
+            if (stringName.length >= 9) return;
+            let letters = ['q', 'w', 'e', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ñ', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'backspace', 'enter', ' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+            const isRight = letters.some((letter) => letter.toLowerCase() === e.key.toLowerCase());
+
+            //Verifico si la tecla es correctecta
+            if (!isRight) return;
+            //Verifico si la tecla es el boton de borrar, entonces borra el ultima letra
+            if (e.key === 'Backspace') {
+                nameText.setColor("green");
+                let string = stringName.charAt(0).toUpperCase() + stringName.slice(1);
+                stringName = string.slice(0, string.length - 1);
+                nameText.setText(stringName);
+                playerObj.name = stringName;
+                return;
+            }
+            if (e.key === 'Enter') {
+                canEdit = true;
+                btnEdit.visible = true;
+                btnReady.visible = false;
+                nameText.setColor("white");
+                window.removeEventListener("keydown", writeName);
+                if (nameText.text === "Escriba...") {
+                    nameText.setText(playerObj.name);
+                }
+                return
+            }
             nameText.setColor("green");
             stringName += e.key;
-            let string =
-                stringName.charAt(0).toUpperCase() + stringName.slice(1);
+            let string = stringName.charAt(0).toUpperCase() + stringName.slice(1);
             nameText.setText(string);
             playerObj.name = string;
+
         }
     }
 }
