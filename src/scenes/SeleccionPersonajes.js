@@ -1,6 +1,4 @@
-// import Player from "../js/objects/Player.js";
-
-// let player1, player2, player3, player4;
+import Button from "../js/functions/Button.js";
 
 let stringName = "";
 let canEdit = true;
@@ -47,14 +45,8 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             this.createInputs(nameText, playerObj);
         }
         
-        this.add
-            .text(760, 20, "X", { backgroundColor: "white", color: "black" })
-            .setInteractive()
-            .on("pointerdown", () => this.scene.start("Inicio"));
-        this.add
-            .text(400, 500, "Listo")
-            .setInteractive()
-            .on("pointerdown", () => this.scene.start("Tablero", { players }));
+        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45) , "btnCerrar", () => this.scene.start("Inicio"));
+        const btnListo = new Button(this, 400, 500, "btnListo", () => this.scene.start("Tablero", { players }))
     }
 
     createInputs(nameText, playerObj) {

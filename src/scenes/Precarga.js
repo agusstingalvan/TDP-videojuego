@@ -7,11 +7,16 @@ export default class Precarga extends Phaser.Scene {
     this.load.image("pato-gorro-bruja", "public/assets/images/personajes/pato-gorro-bruja.png");
     this.load.image("pato-gorro-verde", "public/assets/images/personajes/pato-gorro-verde.png");
     this.load.image("pato-galera", "public/assets/images/personajes/pato-galera.png");
+    
     this.load.image("duckWhite", "public/assets/images/duck-white.png");
-    this.load.image("btnJugar", "public/assets/images/botones/botonesMenu/boton-jugar.png");
-    this.load.image("btnAyuda", "public/assets/images/botones/botonesMenu/boton-ayuda.png");
-    this.load.image("btnFlechaDerecha", "public/assets/images/botones/boton-flecha-izquierda.png");
-    this.load.image("btnFlechaIzquierda", "public/assets/images/botones/boton-flecha-derecha.png");
+
+    this.load.image("btnJugar", "public/assets/images/botones/botones-rojos/boton-jugar.png");
+    this.load.image("btnAyuda", "public/assets/images/botones/botones-rojos/boton-ayuda.png");
+    this.load.image("btnListo", "public/assets/images/botones/botones-rojos/boton-listo.png");
+    this.load.image("btnOpciones", "public/assets/images/botones/botones-rojos/boton-opciones.png");
+    this.load.image("btnCreditos", "public/assets/images/botones/botones-rojos/boton-creditos.png");
+    this.load.image("btnCerrar", "public/assets/images/botones/botones-rojos/boton-cerrar.png");
+    
     this.load.image("lapizEdit", "public/assets/images/botones/lapiz-edit.png");
     this.load.image("btnCheck", "public/assets/images/botones/boton-check.png");
 

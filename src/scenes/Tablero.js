@@ -34,6 +34,7 @@ export default class Tablero extends Phaser.Scene {
 
     const salida = casillasLayer.objects.find((obj) => obj.name === "1");
     const meta = casillasLayer.objects.find((obj) => obj.name === "45");
+
     player1 = players.player1;
     player2 = players.player2;
     player3 = players.player3;
@@ -41,7 +42,7 @@ export default class Tablero extends Phaser.Scene {
 
     player1 = new Player(
       this,
-      salida.x,
+      salida.x + 10,
       salida.y,
       player1.texture,
       null,
