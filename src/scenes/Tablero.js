@@ -160,7 +160,13 @@ export default class Tablero extends Phaser.Scene {
     }
     moverJugador(dado = 1) {
         posActual += dado;
-
+        if (posActual > 45) {
+          numeroDelDado = 0;
+          posActual = 1;
+      }
+      if (posActual === 45) {
+          this.scene.start("Ganador", player1);
+      }
         
         let spawnPoint = map.findObject(
             "casillas",
