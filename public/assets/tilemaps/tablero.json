@@ -573,8 +573,8 @@
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":356.213,
-                 "y":697.976
+                 "x":362.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
@@ -666,7 +666,7 @@
                  "name":"43",
                  "point":true,
                  "rotation":0,
-                 "type":"casilla",
+                 "type":"dinero",
                  "visible":true,
                  "width":0,
                  "x":602.213,
@@ -690,7 +690,7 @@
                  "name":"45",
                  "point":true,
                  "rotation":0,
-                 "type":"",
+                 "type":"vacia",
                  "visible":true,
                  "width":0,
                  "x":762.213,

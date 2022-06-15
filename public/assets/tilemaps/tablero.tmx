@@ -193,13 +193,13 @@
   <object id="233" name="42" type="vacia" x="522.213" y="297.976">
    <point/>
   </object>
-  <object id="234" name="43" type="casilla" x="602.213" y="297.976">
+  <object id="234" name="43" type="dinero" x="602.213" y="297.976">
    <point/>
   </object>
   <object id="235" name="44" type="vacia" x="682.213" y="297.976">
    <point/>
   </object>
-  <object id="236" name="45" x="762.213" y="297.976">
+  <object id="236" name="45" type="vacia" x="762.213" y="297.976">
    <point/>
   </object>
   <object id="237" name="1" x="118.667" y="614.667">
