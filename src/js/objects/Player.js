@@ -20,7 +20,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         }
         this.name = name;
         this.isTurn = false;
-        this.setScale(0.5)
+        // this.setScale(0.5)
     }
     
     get getTimeTurn(){

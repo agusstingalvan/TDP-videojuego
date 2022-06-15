@@ -70,139 +70,139 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="casillas">
-  <object id="193" type="vacia" x="122.213" y="537.976">
+  <object id="193" name="2" type="vacia" x="122.213" y="537.976">
    <point/>
   </object>
-  <object id="194" type="consecuencia" x="122.213" y="457.976">
+  <object id="194" name="3" type="consecuencia" x="122.213" y="457.976">
    <point/>
   </object>
-  <object id="195" type="dinero" x="122.213" y="377.976">
+  <object id="195" name="4" type="dinero" x="122.213" y="377.976">
    <point/>
   </object>
-  <object id="196" type="vacia" x="122.213" y="297.976">
+  <object id="196" name="5" type="vacia" x="122.213" y="297.976">
    <point/>
   </object>
-  <object id="197" type="tienda" x="122.213" y="217.976">
+  <object id="197" name="6" type="tienda" x="122.213" y="217.976">
    <point/>
   </object>
-  <object id="198" type="dinero" x="122.213" y="137.976">
+  <object id="198" name="7" type="dinero" x="122.213" y="137.976">
    <point/>
   </object>
-  <object id="199" type="vacaciones" x="202.213" y="137.976">
+  <object id="199" name="8" type="vacaciones" x="202.213" y="137.976">
    <point/>
   </object>
-  <object id="200" type="consecuencia" x="282.213" y="137.976">
+  <object id="200" name="9" type="consecuencia" x="282.213" y="137.976">
    <point/>
   </object>
-  <object id="201" type="dinero" x="362.213" y="137.976">
+  <object id="201" name="10" type="dinero" x="362.213" y="137.976">
    <point/>
   </object>
-  <object id="202" type="consecuencia" x="442.213" y="137.976">
+  <object id="202" name="11" type="consecuencia" x="442.213" y="137.976">
    <point/>
   </object>
-  <object id="203" type="vacia" x="522.213" y="137.976">
+  <object id="203" name="12" type="vacia" x="522.213" y="137.976">
    <point/>
   </object>
-  <object id="204" type="dinero" x="602.213" y="137.976">
+  <object id="204" name="13" type="dinero" x="602.213" y="137.976">
    <point/>
   </object>
-  <object id="205" type="tienda" x="682.213" y="137.976">
+  <object id="205" name="14" type="tienda" x="682.213" y="137.976">
    <point/>
   </object>
-  <object id="206" type="vacia" x="762.213" y="137.976">
+  <object id="206" name="15" type="vacia" x="762.213" y="137.976">
    <point/>
   </object>
-  <object id="207" type="dinero" x="842.213" y="137.976">
+  <object id="207" name="16" type="dinero" x="842.213" y="137.976">
    <point/>
   </object>
-  <object id="208" type="consecuencia" x="922.213" y="137.976">
+  <object id="208" name="17" type="consecuencia" x="922.213" y="137.976">
    <point/>
   </object>
-  <object id="209" type="casilla" x="1002.21" y="137.976">
+  <object id="209" name="18" type="casilla" x="1002.21" y="137.976">
    <point/>
   </object>
-  <object id="210" type="dinero" x="1082.21" y="137.976">
+  <object id="210" name="19" type="dinero" x="1082.21" y="137.976">
    <point/>
   </object>
-  <object id="211" type="vacia" x="1162.21" y="137.976">
+  <object id="211" name="20" type="vacia" x="1162.21" y="137.976">
    <point/>
   </object>
-  <object id="212" type="consecuencia" x="1162.21" y="217.976">
+  <object id="212" name="21" type="consecuencia" x="1162.21" y="217.976">
    <point/>
   </object>
-  <object id="213" type="dinero" x="1162.21" y="297.976">
+  <object id="213" name="22" type="dinero" x="1162.21" y="297.976">
    <point/>
   </object>
-  <object id="214" type="vacaciones" x="1162.21" y="377.976">
+  <object id="214" name="23" type="vacaciones" x="1162.21" y="377.976">
    <point/>
   </object>
-  <object id="215" type="vacia" x="1162.21" y="457.976">
+  <object id="215" name="24" type="vacia" x="1162.21" y="457.976">
    <point/>
   </object>
-  <object id="216" type="dinero" x="1162.21" y="537.976">
+  <object id="216" name="25" type="dinero" x="1162.21" y="537.976">
    <point/>
   </object>
-  <object id="217" type="tienda" x="1082.21" y="537.976">
+  <object id="217" name="26" type="tienda" x="1082.21" y="537.976">
    <point/>
   </object>
-  <object id="218" type="vacia" x="1002.21" y="537.976">
+  <object id="218" name="27" type="vacia" x="1002.21" y="537.976">
    <point/>
   </object>
-  <object id="219" type="dinero" x="922.213" y="537.976">
+  <object id="219" name="28" type="dinero" x="922.213" y="537.976">
    <point/>
   </object>
-  <object id="220" type="consecuencia" x="842.213" y="537.976">
+  <object id="220" name="29" type="consecuencia" x="842.213" y="537.976">
    <point/>
   </object>
-  <object id="221" type="vacia" x="762.213" y="537.976">
+  <object id="221" name="30" type="vacia" x="762.213" y="537.976">
    <point/>
   </object>
-  <object id="222" type="dinero" x="682.213" y="537.976">
+  <object id="222" name="31" type="dinero" x="682.213" y="537.976">
    <point/>
   </object>
-  <object id="223" type="consecuencia" x="602.213" y="537.976">
+  <object id="223" name="32" type="consecuencia" x="602.213" y="537.976">
    <point/>
   </object>
-  <object id="224" type="vacia" x="522.213" y="537.976">
+  <object id="224" name="33" type="vacia" x="522.213" y="537.976">
    <point/>
   </object>
-  <object id="225" type="dinero" x="442.213" y="537.976">
+  <object id="225" name="34" type="dinero" x="442.213" y="537.976">
    <point/>
   </object>
-  <object id="226" type="vacia" x="362.213" y="537.976">
+  <object id="226" name="35" type="vacia" x="362.213" y="537.976">
    <point/>
   </object>
-  <object id="227" type="vacaciones" x="282.213" y="537.976">
+  <object id="227" name="36" type="vacaciones" x="282.213" y="537.976">
    <point/>
   </object>
-  <object id="228" type="dinero" x="282.213" y="457.976">
+  <object id="228" name="37" type="dinero" x="282.213" y="457.976">
    <point/>
   </object>
-  <object id="229" type="consecuencia" x="282.213" y="377.976">
+  <object id="229" name="38" type="consecuencia" x="282.213" y="377.976">
    <point/>
   </object>
-  <object id="230" type="tienda" x="282.213" y="297.976">
+  <object id="230" name="39" type="tienda" x="282.213" y="297.976">
    <point/>
   </object>
-  <object id="231" type="dinero" x="362.213" y="297.976">
+  <object id="231" name="40" type="dinero" x="362.213" y="297.976">
    <point/>
   </object>
-  <object id="232" type="vacia" x="442.213" y="297.976">
+  <object id="232" name="41" type="vacia" x="442.213" y="297.976">
    <point/>
   </object>
-  <object id="233" type="vacia" x="522.213" y="297.976">
+  <object id="233" name="42" type="vacia" x="522.213" y="297.976">
    <point/>
   </object>
-  <object id="234" type="casilla" x="602.213" y="297.976">
+  <object id="234" name="43" type="casilla" x="602.213" y="297.976">
    <point/>
   </object>
-  <object id="235" type="vacia" x="682.213" y="297.976">
+  <object id="235" name="44" type="vacia" x="682.213" y="297.976">
    <point/>
   </object>
-  <object id="236" name="Meta" x="762.213" y="297.976">
+  <object id="236" name="45" x="762.213" y="297.976">
    <point/>
   </object>
-  <object id="237" name="Salida" x="118.667" y="614.667">
+  <object id="237" name="1" x="118.667" y="614.667">
    <point/>
   </object>
  </objectgroup>

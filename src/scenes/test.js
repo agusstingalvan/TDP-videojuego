@@ -20,7 +20,7 @@ export default class Tablero extends Phaser.Scene {
     const objectLayer = map.getObjectLayer("objetos");
     const sky = map.createLayer('fondo', tiledBackground, 0, 0)
     const casillas = map.createLayer('casillas', tiledCasillas, 0, 0)
-    casillas.setOverlap
+    // casillas.setOverlap
     objectLayer.objects.forEach(obj=>{
       switch(obj.type){
         case "casilla":

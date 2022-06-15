@@ -169,544 +169,544 @@
                 {
                  "height":0,
                  "id":193,
-                 "name":"",
+                 "name":"2",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":537.975708502024
+                 "x":122.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":194,
-                 "name":"",
+                 "name":"3",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":457.975708502024
+                 "x":122.213,
+                 "y":457.976
                 }, 
                 {
                  "height":0,
                  "id":195,
-                 "name":"",
+                 "name":"4",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":377.975708502024
+                 "x":122.213,
+                 "y":377.976
                 }, 
                 {
                  "height":0,
                  "id":196,
-                 "name":"",
+                 "name":"5",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":297.975708502024
+                 "x":122.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":197,
-                 "name":"",
+                 "name":"6",
                  "point":true,
                  "rotation":0,
                  "type":"tienda",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":217.975708502024
+                 "x":122.213,
+                 "y":217.976
                 }, 
                 {
                  "height":0,
                  "id":198,
-                 "name":"",
+                 "name":"7",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":122.21322537112,
-                 "y":137.975708502024
+                 "x":122.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":199,
-                 "name":"",
+                 "name":"8",
                  "point":true,
                  "rotation":0,
                  "type":"vacaciones",
                  "visible":true,
                  "width":0,
-                 "x":202.21322537112,
-                 "y":137.975708502024
+                 "x":202.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":200,
-                 "name":"",
+                 "name":"9",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":282.21322537112,
-                 "y":137.975708502024
+                 "x":282.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":201,
-                 "name":"",
+                 "name":"10",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":362.21322537112,
-                 "y":137.975708502024
+                 "x":362.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":202,
-                 "name":"",
+                 "name":"11",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":442.21322537112,
-                 "y":137.975708502024
+                 "x":442.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":203,
-                 "name":"",
+                 "name":"12",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":522.21322537112,
-                 "y":137.975708502024
+                 "x":522.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":204,
-                 "name":"",
+                 "name":"13",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":602.21322537112,
-                 "y":137.975708502024
+                 "x":602.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":205,
-                 "name":"",
+                 "name":"14",
                  "point":true,
                  "rotation":0,
                  "type":"tienda",
                  "visible":true,
                  "width":0,
-                 "x":682.21322537112,
-                 "y":137.975708502024
+                 "x":682.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":206,
-                 "name":"",
+                 "name":"15",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":762.21322537112,
-                 "y":137.975708502024
+                 "x":762.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":207,
-                 "name":"",
+                 "name":"16",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":842.21322537112,
-                 "y":137.975708502024
+                 "x":842.213,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":208,
-                 "name":"",
+                 "name":"17",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":922.21322537112,
-                 "y":137.975708502024
+                 "x":922.213,
+                 "y":137.976
                 },
             
                 {
                  "height":0,
                  "id":209,
-                 "name":"",
+                 "name":"18",
                  "point":true,
                  "rotation":0,
                  "type":"casilla",
                  "visible":true,
                  "width":0,
-                 "x":1002.21322537112,
-                 "y":137.975708502024
+                 "x":1002.21,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":210,
-                 "name":"",
+                 "name":"19",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":1082.21322537112,
-                 "y":137.975708502024
+                 "x":1082.21,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":211,
-                 "name":"",
+                 "name":"20",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":137.975708502024
+                 "x":1162.21,
+                 "y":137.976
                 }, 
                 {
                  "height":0,
                  "id":212,
-                 "name":"",
+                 "name":"21",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":217.975708502024
+                 "x":1162.21,
+                 "y":217.976
                 }, 
                 {
                  "height":0,
                  "id":213,
-                 "name":"",
+                 "name":"22",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":297.975708502024
+                 "x":1162.21,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":214,
-                 "name":"",
+                 "name":"23",
                  "point":true,
                  "rotation":0,
                  "type":"vacaciones",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":377.975708502024
+                 "x":1162.21,
+                 "y":377.976
                 }, 
                 {
                  "height":0,
                  "id":215,
-                 "name":"",
+                 "name":"24",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":457.975708502024
+                 "x":1162.21,
+                 "y":457.976
                 }, 
                 {
                  "height":0,
                  "id":216,
-                 "name":"",
+                 "name":"25",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":1162.21322537112,
-                 "y":537.975708502024
+                 "x":1162.21,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":217,
-                 "name":"",
+                 "name":"26",
                  "point":true,
                  "rotation":0,
                  "type":"tienda",
                  "visible":true,
                  "width":0,
-                 "x":1082.21322537112,
-                 "y":537.975708502024
+                 "x":1082.21,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":218,
-                 "name":"",
+                 "name":"27",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":1002.21322537112,
-                 "y":537.975708502024
+                 "x":1002.21,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":219,
-                 "name":"",
+                 "name":"28",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":922.21322537112,
-                 "y":537.975708502024
+                 "x":922.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":220,
-                 "name":"",
+                 "name":"29",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":842.21322537112,
-                 "y":537.975708502024
+                 "x":842.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":221,
-                 "name":"",
+                 "name":"30",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":762.21322537112,
-                 "y":537.975708502024
+                 "x":762.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":222,
-                 "name":"",
+                 "name":"31",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":682.21322537112,
-                 "y":537.975708502024
+                 "x":682.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":223,
-                 "name":"",
+                 "name":"32",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":602.21322537112,
-                 "y":537.975708502024
+                 "x":602.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":224,
-                 "name":"",
+                 "name":"33",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":522.21322537112,
-                 "y":537.975708502024
+                 "x":522.213,
+                 "y":537.976
                 },
             
                 {
                  "height":0,
                  "id":225,
-                 "name":"",
+                 "name":"34",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":442.21322537112,
-                 "y":537.975708502024
+                 "x":442.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":226,
-                 "name":"",
+                 "name":"35",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":362.21322537112,
-                 "y":537.975708502024
+                 "x":362.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":227,
-                 "name":"",
+                 "name":"36",
                  "point":true,
                  "rotation":0,
                  "type":"vacaciones",
                  "visible":true,
                  "width":0,
-                 "x":282.21322537112,
-                 "y":537.975708502024
+                 "x":282.213,
+                 "y":537.976
                 }, 
                 {
                  "height":0,
                  "id":228,
-                 "name":"",
+                 "name":"37",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":282.21322537112,
-                 "y":457.975708502024
+                 "x":282.213,
+                 "y":457.976
                 }, 
                 {
                  "height":0,
                  "id":229,
-                 "name":"",
+                 "name":"38",
                  "point":true,
                  "rotation":0,
                  "type":"consecuencia",
                  "visible":true,
                  "width":0,
-                 "x":282.21322537112,
-                 "y":377.975708502024
+                 "x":282.213,
+                 "y":377.976
                 }, 
                 {
                  "height":0,
                  "id":230,
-                 "name":"",
+                 "name":"39",
                  "point":true,
                  "rotation":0,
                  "type":"tienda",
                  "visible":true,
                  "width":0,
-                 "x":282.21322537112,
-                 "y":297.975708502024
+                 "x":282.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":231,
-                 "name":"",
+                 "name":"40",
                  "point":true,
                  "rotation":0,
                  "type":"dinero",
                  "visible":true,
                  "width":0,
-                 "x":362.21322537112,
-                 "y":297.975708502024
+                 "x":362.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":232,
-                 "name":"",
+                 "name":"41",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":442.21322537112,
-                 "y":297.975708502024
+                 "x":442.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":233,
-                 "name":"",
+                 "name":"42",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":522.21322537112,
-                 "y":297.975708502024
+                 "x":522.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":234,
-                 "name":"",
+                 "name":"43",
                  "point":true,
                  "rotation":0,
                  "type":"casilla",
                  "visible":true,
                  "width":0,
-                 "x":602.21322537112,
-                 "y":297.975708502024
+                 "x":602.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":235,
-                 "name":"",
+                 "name":"44",
                  "point":true,
                  "rotation":0,
                  "type":"vacia",
                  "visible":true,
                  "width":0,
-                 "x":682.21322537112,
-                 "y":297.975708502024
+                 "x":682.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":236,
-                 "name":"Meta",
+                 "name":"45",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":762.21322537112,
-                 "y":297.975708502024
+                 "x":762.213,
+                 "y":297.976
                 }, 
                 {
                  "height":0,
                  "id":237,
-                 "name":"Salida",
+                 "name":"1",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":118.666666666667,
-                 "y":614.666666666667
+                 "x":118.667,
+                 "y":614.667
                 }],
          "opacity":1,
          "type":"objectgroup",
