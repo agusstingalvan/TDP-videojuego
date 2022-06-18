@@ -17,20 +17,20 @@ let players = {
         color: "0xa8323a",
         texture: "duckWhite",
     },
-    player3: {
-        name: "Jugador 3",
-        x: 500,
-        y: 300,
-        color: "0xedd500",
-        texture: "duckWhite",
-    },
-    player4: {
-        name: "Jugador 4",
-        x: 675,
-        y: 300,
-        color: "0x000ced",
-        texture: "duckWhite",
-    },
+    // player3: {
+    //     name: "Jugador 3",
+    //     x: 500,
+    //     y: 300,
+    //     color: "0xedd500",
+    //     texture: "duckWhite",
+    // },
+    // player4: {
+    //     name: "Jugador 4",
+    //     x: 675,
+    //     y: 300,
+    //     color: "0x000ced",
+    //     texture: "duckWhite",
+    // },
 };
 export default class SeleccionPersonajes extends Phaser.Scene {
     constructor() {

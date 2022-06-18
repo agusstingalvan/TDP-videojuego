@@ -32,6 +32,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.posJugador = posJugador;
         this.map = map;
+        this.nextTurn = true;
+        this.countTurn = 0;
+        this.afectarContricante = false;
         // this.setScale(0.5)
     }
 
@@ -87,6 +90,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     set setIsTurn(bool) {
         this.isTurn = bool;
     }
+    get getPosJugador(){
+        return this.posJugador;
+    }
+    set setPosJugador(num){
+        this.posJugador = num;
+    }
+    get getNextTurn() {
+        return  this.nextTurn;
+    }
+    set setNextTurn(bool){
+        this.nextTurn = bool;
+    }
+    get getCountTurn(){
+        return this.countTurn;
+    }
+    set setCountTurn(num = 1){
+        this.countTurn += num;
+    }
+    get getAfectarContricante(){
+        return this.afectarContricante;
+    }
+    set setAfectarContricante(bool){
+        this.afectarContricante = bool;
+    }
     mover(dado = 1) {
         this.posJugador += dado;
         if (this.posJugador > 45) {
@@ -100,14 +127,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             "casillas",
             (obj) => obj.name === this.posJugador.toString()
         );
-        this.setX(spawnPoint.x + Phaser.Math.Between(0, 44));
-        this.setY(spawnPoint.y - Phaser.Math.Between(0, 44));
+        this.setX(spawnPoint.x + Phaser.Math.Between(0, 34));
+        this.setY(spawnPoint.y - Phaser.Math.Between(0, 34));
 
         this.setIsTurn = false;
         this.setCanThrowDice = false;
     }
     tirarDado(isClick = false) {
-        if (this.getCanThrowDice) {
+        if (this.getCanThrowDice && this.nextTurn) {
             if (isClick) {
                 let numeroDelDado = Phaser.Math.Between(1, 6);
                 this.mover(numeroDelDado);
@@ -139,13 +166,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //         );
     //     }
     // }
-    // soloMover(pos) {
-    //     // console.log(typeof pos)
-    //     let spawnPoint = this.map.findObject(
-    //         "casillas",
-    //         (obj) => obj.name === pos.toString()
-    //     );
-    //     this.player1.setX(spawnPoint.x);
-    //     this.player1.setY(spawnPoint.y);
-    // }
+    soloMover(pos) {
+        // console.log(typeof pos)
+        let spawnPoint = this.map.findObject(
+            "casillas",
+            (obj) => obj.name === pos.toString()
+        );
+        this.setX(spawnPoint.x);
+        this.setY(spawnPoint.y);
+    }
 }

@@ -38,12 +38,14 @@ export default class Tablero extends Phaser.Scene {
 
         this.player1 = this.players.player1;
         this.player2 = this.players.player2;
-        this.player3 = this.players.player3;
-        this.player4 = this.players.player4;
+        // this.player3 = this.players.player3;
+        // this.player4 = this.players.player4;
+        this.player1.setAfectarContricante = false;
+        this.player2.setAfectarContricante = false;
 
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
-        this.initTiempo = 60;
+        this.initTiempo = 15;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -55,7 +57,6 @@ export default class Tablero extends Phaser.Scene {
             "casillas-atlas",
             "tiledCasillas"
         );
-
         const sky = this.map.createLayer("fondo", tiledBackground, 0, 0);
         const casillas = this.map.createLayer("casillas", tiledCasillas, 0, 0);
         const objectsLayers = this.map.getObjectLayer("objetos");
@@ -64,6 +65,7 @@ export default class Tablero extends Phaser.Scene {
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
         );
+
         // const meta = casillasLayer.objects.find((obj) => obj.name === "45");
 
         this.player1 = new Player(
@@ -130,25 +132,23 @@ export default class Tablero extends Phaser.Scene {
         //             this.map,
         //             this.posActual)
         // }
-        
-
 
         this.player1.setIsTurn = true;
-
         this.players = { player1: this.player1, player2: this.player2 };
 
-        // this.groupCasillaConsecuencia = this.physics.add.group();
-        // this.casillasLayer.objects.forEach((casilla) => {
-        //     switch (casilla.type) {
-        //         case "consecuencia":
-        //             this.crearCasilla(
-        //                 this.casillaInvisible,
-        //                 this.groupCasillaConsecuencia,
-        //                 casilla, (player, cas)=>this.casillaConsecuencia(player, cas)
-        //             );
-        //             break;
-        //     }
-        // });
+        this.groupCasillaConsecuencia = this.physics.add.group();
+        this.casillasLayer.objects.forEach((casilla) => {
+            switch (casilla.type) {
+                case "consecuencia":
+                    this.crearCasilla(
+                        this.casillaInvisible,
+                        this.groupCasillaConsecuencia,
+                        casilla,
+                        (player, cas) => this.casillaConsecuencia(player, cas)
+                    );
+                    break;
+            }
+        });
 
         this.dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
@@ -194,7 +194,16 @@ export default class Tablero extends Phaser.Scene {
             //Para que se pueda tirar el dado.
             player1.setCanThrowDice = true;
             player2.setCanThrowDice = false;
-
+            //Si pierdo un turno Y el proximo turno es igual a falso == Pierdon el turno** Si no tiro el dado
+            if (player1.getCountTurn >= 1 && !player1.nextTurn) {
+                player1.setCountTurn = 0;
+                player1.setNextTurn = true;
+                player1.setIsTurn = false;
+                player2.setIsTurn = true;
+                console.log("Pierdiste este turno.");
+                return;
+            }
+            //Si el jugador da click, tira el dado
             if (clickOnButton) {
                 this.btnDado.on("pointerdown", () => {
                     player1.tirarDado(clickOnButton);
@@ -204,8 +213,9 @@ export default class Tablero extends Phaser.Scene {
                     player1.setIsTurn = false;
                     player2.setIsTurn = true;
                 });
-                return
+                return;
             }
+            //Si no da click, se mueve uno.
             player1.tirarDado(false);
             player1.setTimeTurn = this.initTiempo;
             this.tiempo = this.initTiempo;
@@ -235,6 +245,16 @@ export default class Tablero extends Phaser.Scene {
             null,
             this
         );
+        this.physics.add.overlap(
+            this.player2,
+            casillaBody,
+            (player, cas) => {
+                this.actualizarPos(casilla.name);
+                callback(player, cas);
+            },
+            null,
+            this
+        );
     }
     cronometro() {
         this.tiempo -= 1;
@@ -251,12 +271,13 @@ export default class Tablero extends Phaser.Scene {
             }
             this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
             // jugadorActual.tirarDado(false);
-            console.log(jugadorAct.getName);
-            console.log(jugadorCambio.getName);
+            // console.log(jugadorAct.getName);
+            // console.log(jugadorCambio.getName);
             this.tiempo = this.initTiempo;
         }
     }
     actualizarPos(id) {
+        this.posAnterior = this.posActual;
         this.posActual = parseInt(id);
     }
     casillaVacia(player, casillaBody) {
@@ -271,28 +292,64 @@ export default class Tablero extends Phaser.Scene {
         casillaBody.disableBody(true, true);
         this.casillaDescativadaOverlap = casillaBody;
 
-        const numeroRandom = Phaser.Math.Between(1, 2);
+        const numeroRandom = Phaser.Math.Between(1, 3);
 
-        switch (numeroRandom) {
+        switch (3) {
             case 1:
-                console.log("Pierdes el turno");
+                console.warn("Pierdes el turno");
+                console.error(player.getName);
+                player.setNextTurn = false;
+                player.setCountTurn = 1;
                 break;
             case 2:
-                console.log("Retrocede 4 casillas");
-                this.btnDado.visible = false;
+                console.warn("Retrocede 4 casillas");
+                console.error(player.getName);
+                player.setIsTurn = false;
                 setTimeout(() => {
                     let nuevaPos = this.posActual - 4;
                     if (nuevaPos <= 0) {
                         this.posActual = 1;
                         console.warn("Ahora: ", this.posActual);
-                        this.soloMover(this.posActual);
+                        player.soloMover(this.posActual);
                         return;
                     }
-                    this.posActual = this.posActual - 4;
+                    this.posActual = nuevaPos;
                     console.warn("Ahora: ", this.posActual);
-                    this.soloMover(this.posActual);
-                    this.btnDado.visible = true;
-                }, 3000);
+                    player.soloMover(this.posActual);
+                }, 1000);
+                break;
+
+            case 3:
+                console.warn("Retrocede 4 casillas al CONTRICANTE");
+                console.error(player.getName);
+                player.setIsTurn = false;
+                player.setAfectarContricante = true;
+                let jugadorAfectado;
+                for(let playerId in this.players){
+                    let jugador = this.players[playerId]
+                    if(!jugador.getAfectarContricante) {
+                        jugadorAfectado = jugador;
+                        console.log('Afecta al jugador: ', jugadorAfectado.getName);
+                        setTimeout(() => {
+                            console.log('Estaba en: ', jugadorAfectado.getPosJugador)
+                            let posicionDelContricante = jugadorAfectado.getPosJugador - 4;
+                            
+                            if (posicionDelContricante <= 0) {
+                                posicionDelContricante = 1;
+                                // console.warn("Ahora: ", posicionDelContricante);
+                                console.log('Y ahora esta en:', posicionDelContricante);
+                                jugadorAfectado.soloMover(posicionDelContricante);
+                                return;
+                            }
+                            jugadorAfectado.setPosJugador = posicionDelContricante;
+                            this.posActual = posicionDelContricante;
+                            // console.warn("Ahora: ", this.posActual);
+                            console.log('Y ahora esta en:', posicionDelContricante);
+                            jugadorAfectado.soloMover(this.posActual);
+                            player.setAfectarContricante = false;
+                        }, 1000);
+                    };
+                }
                 break;
         }
     }
