@@ -40,7 +40,7 @@ export default class Tablero extends Phaser.Scene {
 
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
-        this.initTiempo = 10;
+        this.initTiempo = 15;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -72,38 +72,14 @@ export default class Tablero extends Phaser.Scene {
             this.player1.name,
             this.player1.color
         );
-
-        this.casillasGroup = this.physics.add.group();
-        this.groupCasillaConsecuencia = this.physics.add.group();
         this.groupCasillaConsecuencia = this.physics.add.group();
         this.casillasLayer.objects.forEach((casilla) => {
             switch (casilla.type) {
                 case "consecuencia":
-                    /*
-                    1: añado una casilla en la posicion de la capa de casillas del tiled segun el type.
-                    2: A la casilla que creo mediante el codigo, le descativo la gravedad y la hago no visible.
-                    3: le add un overlap. Para saber cuando el jugador pisa dicha casilla. Y poder manejar la cosecuencia. 
-                    4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
-                    5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
-                    */
-                    this.casillaInvisible =
-                        this.groupCasillaConsecuencia.create(
-                            casilla.x,
-                            casilla.y,
-                            "casillaInvisible"
-                        );
-                    this.casillaInvisible.body.allowGravity = false;
-                    this.casillaInvisible.visible = true;
-
-                    this.physics.add.overlap(
-                        this.player1,
+                    this.crearCasilla(
                         this.casillaInvisible,
-                        (player, cas) => {
-                            this.actualizarPos(casilla.name);
-                            this.casillaConsecuencia(player, cas);
-                        },
-                        null,
-                        this
+                        this.groupCasillaConsecuencia,
+                        casilla, (player, cas)=>this.casillaConsecuencia(player, cas)
                     );
                     break;
             }
@@ -159,7 +135,28 @@ export default class Tablero extends Phaser.Scene {
             { color: "red" }
         );
     }
-
+    crearCasilla(casillaBody, grupo, casilla, callback) {
+        /*
+         1: añado una casilla en la posicion de la capa de casillas del tiled segun el type.
+         2: A la casilla que creo mediante el codigo, le descativo la gravedad y la hago no visible.
+         3: le add un overlap. Para saber cuando el jugador pisa dicha casilla. Y poder manejar la cosecuencia. 
+         4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
+         5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
+        */
+        casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
+        casillaBody.body.allowGravity = false;
+        casillaBody.visible = false;
+        this.physics.add.overlap(
+            this.player1,
+            casillaBody,
+            (player, cas) => {
+                this.actualizarPos(casilla.name);
+                callback(player, cas);
+            },
+            null,
+            this
+        );
+    }
     cronometro() {
         this.tiempo -= 1;
         this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
