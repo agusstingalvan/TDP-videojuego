@@ -168,6 +168,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // }
     soloMover(pos) {
         // console.log(typeof pos)
+        this.setPosJugador = pos;
         let spawnPoint = this.map.findObject(
             "casillas",
             (obj) => obj.name === pos.toString()

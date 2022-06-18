@@ -212,6 +212,7 @@ export default class Tablero extends Phaser.Scene {
                     this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
                     player1.setIsTurn = false;
                     player2.setIsTurn = true;
+                    this.reactivarCasillaMecanica()
                 });
                 return;
             }
@@ -222,6 +223,14 @@ export default class Tablero extends Phaser.Scene {
             this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
             player1.setIsTurn = false;
             player2.setIsTurn = true;
+            if (this.casillaDescativadaOverlap)
+                this.casillaDescativadaOverlap.enableBody(
+                    true,
+                    this.casillaDescativadaOverlap.x,
+                    this.casillaDescativadaOverlap.y,
+                    true,
+                    true
+                );
         }
     }
     crearCasilla(casillaBody, grupo, casilla, callback) {
@@ -234,7 +243,7 @@ export default class Tablero extends Phaser.Scene {
         */
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = false;
+        casillaBody.visible = true;
         this.physics.add.overlap(
             this.player1,
             casillaBody,
@@ -264,12 +273,14 @@ export default class Tablero extends Phaser.Scene {
             for (let player in this.players) {
                 let playerObj = this.players[player];
                 if (playerObj.getIsTurn) jugadorAct = playerObj;
+                for (let player in this.players) {
+                    let playerObj = this.players[player];
+                    if (!playerObj.getIsTurn) jugadorCambio = playerObj;
+                    this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
+                }
             }
-            for (let player in this.players) {
-                let playerObj = this.players[player];
-                if (!playerObj.getIsTurn) jugadorCambio = playerObj;
-            }
-            this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
+            
+            
             // jugadorActual.tirarDado(false);
             // console.log(jugadorAct.getName);
             // console.log(jugadorCambio.getName);
@@ -294,7 +305,7 @@ export default class Tablero extends Phaser.Scene {
 
         const numeroRandom = Phaser.Math.Between(1, 3);
 
-        switch (3) {
+        switch (numeroRandom) {
             case 1:
                 console.warn("Pierdes el turno");
                 console.error(player.getName);
@@ -311,12 +322,14 @@ export default class Tablero extends Phaser.Scene {
                         this.posActual = 1;
                         console.warn("Ahora: ", this.posActual);
                         player.soloMover(this.posActual);
+                        this.reactivarCasillaMecanica()
                         return;
                     }
                     this.posActual = nuevaPos;
                     console.warn("Ahora: ", this.posActual);
                     player.soloMover(this.posActual);
-                }, 1000);
+                    this.reactivarCasillaMecanica()
+                }, 3000);
                 break;
 
             case 3:
@@ -325,33 +338,69 @@ export default class Tablero extends Phaser.Scene {
                 player.setIsTurn = false;
                 player.setAfectarContricante = true;
                 let jugadorAfectado;
-                for(let playerId in this.players){
-                    let jugador = this.players[playerId]
-                    if(!jugador.getAfectarContricante) {
+                for (let playerId in this.players) {
+                    let jugador = this.players[playerId];
+                    if (!jugador.getAfectarContricante) {
                         jugadorAfectado = jugador;
-                        console.log('Afecta al jugador: ', jugadorAfectado.getName);
+                        console.log(
+                            "Afecta al jugador: ",
+                            jugadorAfectado.getName
+                        );
                         setTimeout(() => {
-                            console.log('Estaba en: ', jugadorAfectado.getPosJugador)
-                            let posicionDelContricante = jugadorAfectado.getPosJugador - 4;
-                            
+                            console.log(
+                                "Estaba en: ",
+                                jugadorAfectado.getPosJugador
+                            );
+                            let posicionDelContricante =
+                                jugadorAfectado.getPosJugador - 4;
+
                             if (posicionDelContricante <= 0) {
                                 posicionDelContricante = 1;
                                 // console.warn("Ahora: ", posicionDelContricante);
-                                console.log('Y ahora esta en:', posicionDelContricante);
-                                jugadorAfectado.soloMover(posicionDelContricante);
+                                console.log(
+                                    "Y ahora esta en:",
+                                    posicionDelContricante
+                                );
+                                jugadorAfectado.soloMover(
+                                    posicionDelContricante
+                                );
+                                this.reactivarCasillaMecanica()
+                                player.setAfectarContricante = false;
                                 return;
                             }
-                            jugadorAfectado.setPosJugador = posicionDelContricante;
+                            jugadorAfectado.setPosJugador =
+                                posicionDelContricante;
                             this.posActual = posicionDelContricante;
                             // console.warn("Ahora: ", this.posActual);
-                            console.log('Y ahora esta en:', posicionDelContricante);
+                            console.log(
+                                "Y ahora esta en:",
+                                posicionDelContricante
+                            );
                             jugadorAfectado.soloMover(this.posActual);
+                            this.reactivarCasillaMecanica()
                             player.setAfectarContricante = false;
-                        }, 1000);
-                    };
+                        }, 3000);
+                    }
                 }
                 break;
+            case 4:
+                console.warn("Yunque en la cabeza");
+                console.error(player.getName);
+                setTimeout(() => {
+                    player.soloMover(1);
+                    this.reactivarCasillaMecanica()
+                }, 3000);
+                break;
         }
+    }
+    reactivarCasillaMecanica() {
+        if (this.casillaDescativadaOverlap)
+            this.casillaDescativadaOverlap.enableBody(
+                true,
+                this.casillaDescativadaOverlap.x,
+                this.casillaDescativadaOverlap.y,
+                true, false
+            );
     }
 }
 
