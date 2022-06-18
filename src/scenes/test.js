@@ -1,83 +1,252 @@
+import Button from "../js/functions/Button.js";
 import Player from "../js/objects/Player.js";
 
-let numeroDelDado = 0,
-  textDado,
-  players,
-  player,
-  listCasillas = [];
-  let player1;
+let numeroDelDado, players, player1, player2, player3, player4, textDinero;
+let casillaBody;
+let posActual;
+let casillasLayer, map, casillasGroup
 export default class Tablero extends Phaser.Scene {
-  constructor() {
-    super("Tablero");
-  }
-  init(data){
-    players = data.players
-  }
-  create() {
-    let map = this.make.tilemap({key: 'map_tablero'});
-    const tiledBackground = map.addTilesetImage('fondo-tablero', 'tiledBackground');
-    const tiledCasillas = map.addTilesetImage('casillas-atlas', 'tiledCasillas');
-    const objectLayer = map.getObjectLayer("objetos");
-    const sky = map.createLayer('fondo', tiledBackground, 0, 0)
-    const casillas = map.createLayer('casillas', tiledCasillas, 0, 0)
-    // casillas.setOverlap
-    objectLayer.objects.forEach(obj=>{
-      switch(obj.type){
-        case "casilla":
-          
-          listCasillas.push(obj);
-         
-        break;
-      }
-    })
-    this.physics.add.overlap(map.findObject('objetos', (obj1) => obj1.name === 'casilla'), player1, ()=>{
-      console.log(obj.id);
-      
-    }, null, this)
-    console.log(listCasillas)
-    player1 = players.player1;
-    let player2 = players.player2;
-    let player3 = players.player3;
-    let player4 = players.player4;
-    player1 = new Player(this, listCasillas[0].x, listCasillas[0].y, player1.texture, null, player1.name, player1.color);
-    // let player1 = new Player(this, 150, 300, "duckWhite", null)
-    // player = this.add.image(100, 550, "duck");
-    this.add.text(0, 0, player1.name);
-    this.add
-      .text(500, 500, "TirarDado")
-      .setInteractive()
-      .on("pointerdown", () => this.tirarDado());
-    this.add
-      .text(400, 300, "Ver ganador")
-      .setInteractive()
-      .on("pointerdown", () => this.scene.start("Ganador"));
-    textDado = this.add.text(400, 100, null, {
-      backgroundColor: "red",
-      color: "white",
-    });
-  }
-  tirarDado() {
-    numeroDelDado = Phaser.Math.Between(1, 6);
-    textDado.setText(`Numero de dado: ${numeroDelDado}`);
-    this.moverJugador(numeroDelDado);
-  }
-  moverJugador(numeroDado = 1) {
-    let numAnterior = 0;
-    let numNuevo = 0;
+    constructor() {
+        super("Tablero");
+    }
+    init(data) {
+        players = data.players;
+        numeroDelDado = 0;
+        posActual = 1;
+    }
+    create() {
+        map = this.make.tilemap({ key: "map_tablero" });
+        const tiledBackground = map.addTilesetImage(
+            "fondo-tablero",
+            "tiledBackground"
+        );
+        const tiledCasillas = map.addTilesetImage(
+            "casillas-atlas",
+            "tiledCasillas"
+        );
 
-    let pos = {
-      y: player1.y - 80,
-      x: player1.x - 80,
-    };
+        const sky = map.createLayer("fondo", tiledBackground, 0, 0);
+        const casillas = map.createLayer("casillas", tiledCasillas, 0, 0);
+        const objectsLayers = map.getObjectLayer("objetos");
+        casillasLayer = map.getObjectLayer("casillas");
 
-    pos.y = player1.y - 80 * numeroDado;
-    pos.x = player1.x - 80 * numeroDado;
-    player1.setY(pos.y);
+        const salida = casillasLayer.objects.find((obj) => obj.name === "1");
+        // const meta = casillasLayer.objects.find((obj) => obj.name === "45");
 
-    // if (player.y <= 0) {
-    //   player.setX(pos.x);
-    // }
-  }
+        player1 = players.player1;
+        player2 = players.player2;
+        player3 = players.player3;
+        player4 = players.player4;
+
+        player1 = new Player(
+            this,
+            salida.x,
+            salida.y,
+            player1.texture,
+            null,
+            player1.name,
+            player1.color
+        );
+
+        casillasGroup = this.physics.add.group();
+        casillasLayer.objects.forEach((casilla) => {
+            switch (casilla.type) {
+                case "dinero":
+                    casillaBody = casillasGroup.create(
+                        casilla.x,
+                        casilla.y,
+                        "casillaVacia"
+                    );
+                    casillaBody.body.allowGravity = false;
+                    casillaBody.visible = false;
+                    this.physics.add.overlap(
+                        player1,
+                        casillaBody,
+                        (player, cas) => {
+                            let id = casilla.name;
+                            this.actualizarPos(id);
+                            this.casillaDinero(player, cas);
+                        },
+                        null,
+                        this
+                    );
+                    break;
+                case "consecuencia":
+                    casillaBody = casillasGroup.create(
+                        casilla.x,
+                        casilla.y,
+                        "casillaVacia"
+                    );
+                    casillaBody.body.allowGravity = false;
+                    casillaBody.visible = false;
+
+                    this.physics.add.overlap(
+                        player1,
+                        casillaBody,
+                        (player, cas) => {
+                            let id = casilla.name;
+                            this.actualizarPos(id);
+                            this.casillaConsecuencia(player, cas);
+                        },
+                        null,
+                        this
+                    );
+                    break;
+                case "vacia":
+                    casillaBody = casillasGroup.create(
+                        casilla.x,
+                        casilla.y,
+                        "casillaVacia"
+                    );
+                    casillaBody.body.allowGravity = false;
+                    casillaBody.visible = false;
+
+                    this.physics.add.overlap(
+                        player1,
+                        casillaBody,
+                        (player, cas) => {
+                            let id = casilla.name;
+                            this.actualizarPos(id);
+                            this.casillaVacia(player, cas);
+                        },
+                        null,
+                        this
+                    );
+                    break;
+                case "tienda":
+                    casillaBody = casillasGroup.create(
+                        casilla.x,
+                        casilla.y,
+                        "casillaVacia"
+                    );
+                    casillaBody.body.allowGravity = false;
+                    casillaBody.visible = false;
+
+                    this.physics.add.overlap(
+                        player1,
+                        casillaBody,
+                        (player, cas) => {
+                            let id = casilla.name;
+                            this.actualizarPos(id);
+                            this.casillaTienda(player, cas);
+                        },
+                        null,
+                        this
+                    );
+                    break;
+                case "vacaciones":
+                    casillaBody = casillasGroup.create(
+                        casilla.x,
+                        casilla.y,
+                        "casillaVacia"
+                    );
+                    casillaBody.body.allowGravity = false;
+                    casillaBody.visible = false;
+
+                    this.physics.add.overlap(
+                        player1,
+                        casillaBody,
+                        (player, cas) => {
+                            let id = casilla.name;
+                            this.actualizarPos(id);
+                            this.casillaVacaciones(player, cas);
+                        },
+                        null,
+                        this
+                    );
+                    break;
+            }
+        });
+
+        this.add.text(0, 0, player1.name, { color: "red" });
+        textDinero = this.add.text(
+            this.sys.game.config.width / 2,
+            this.sys.game.config.height - 100,
+            `$ 0`,
+            { fontFamily: "Arial", fontSize: 32, color: "red" }
+        );
+        const dadoPosition = objectsLayers.objects.find(
+            (obj) => obj.name === "dado"
+        );
+        this.add
+            .text(dadoPosition.x, dadoPosition.y, "TirarDado")
+            .setInteractive()
+            .on("pointerdown", () => this.tirarDado());
+
+        const btnCerrar = new Button(
+            this,
+            this.sys.game.config.width - 45,
+            this.sys.game.config.height - (this.sys.game.config.height - 45),
+            "btnCerrar",
+            () => this.scene.start("Inicio")
+        );
+    }
+    tirarDado() {
+        numeroDelDado = Phaser.Math.Between(1, 6);
+        this.moverJugador(numeroDelDado);
+    }
+    moverJugador(dado = 1) {
+        
+        posActual += dado;
+        if (posActual > 45) {
+            numeroDelDado = 0;
+            posActual = 1;   
+        }
+        if (posActual === 45) {
+            this.scene.start("Ganador", player1);
+        }
+        let spawnPoint = map.findObject(
+            "casillas",
+            (obj) => obj.name === posActual.toString()
+        );
+        player1.setX(spawnPoint.x);
+        player1.setY(spawnPoint.y);
+        casillasGroup.children.entries.forEach((casilla)=> casilla.enableBody(true, casilla.x, casilla.y, true, false))
+    }
+
+    actualizarPos(id) {
+        posActual = parseInt(id);
+    }
+    casillaVacia(player, casillaBody) {
+        casillaBody.disableBody(true, true);
+        console.log("VACIA");
+    }
+    casillaDinero(player, casillaBody) {
+        casillaBody.disableBody(true, true);
+        console.log("dinero");
+        player.setWallet = player.getWallet + 300;
+        console.log(player.getWallet);
+        textDinero.setText(`$${player.getWallet}`);
+    }
+    casillaConsecuencia(player, casillaBody) {
+        casillaBody.disableBody(true, true);
+        console.log("Consecuencia");
+    }
+    casillaTienda(player, casillaBody) {
+        casillaBody.disableBody(true, true);
+        console.log("Tienda");
+    }
+    casillaVacaciones(player, casillaBody) {
+        casillaBody.disableBody(true, true);
+        console.log("vacaciones");
+    }
 }
 
 //tirar dado, moverse, usar powerUp, usarCasilla, cronometro.
+// let pos = {
+//   y: player1.y - 80,
+//   x: player1.x - 80,
+// };
+
+// pos.y = player1.y - 80 * numeroDado;
+// pos.x = player1.x - 80 * numeroDado;
+
+// player1.setY(pos.y);
+
+
+this.load.image("btnJugar", "public/assets/images/botones/botones-rojos/boton-jugar.png");
+this.load.image("btnAyuda", "public/assets/images/botones/botones-rojos/boton-ayuda.png");
+this.load.image("btnListo", "public/assets/images/botones/botones-rojos/boton-listo.png");
+this.load.image("btnOpciones", "public/assets/images/botones/botones-rojos/boton-opciones.png");
+this.load.image("btnCreditos", "public/assets/images/botones/botones-rojos/boton-creditos.png");
+this.load.image("btnCerrar", "public/assets/images/botones/botones-rojos/boton-cerrar.png");

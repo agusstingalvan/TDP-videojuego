@@ -8,11 +8,6 @@
  </tileset>
  <tileset firstgid="145" name="casillas-atlas" tilewidth="80" tileheight="80" tilecount="6" columns="3">
   <image source="../images/casillas-atlas.png" width="240" height="160"/>
-  <tile id="0">
-   <properties>
-    <property name="overlap" type="bool" value="true"/>
-   </properties>
-  </tile>
  </tileset>
  <layer id="1" name="fondo" width="16" height="9">
   <data encoding="csv">
@@ -118,7 +113,7 @@
   <object id="208" name="17" type="consecuencia" x="922.213" y="137.976">
    <point/>
   </object>
-  <object id="209" name="18" type="casilla" x="1002.21" y="137.976">
+  <object id="209" name="18" type="vacia" x="1002.21" y="137.976">
    <point/>
   </object>
   <object id="210" name="19" type="dinero" x="1082.21" y="137.976">

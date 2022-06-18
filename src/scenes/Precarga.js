@@ -23,7 +23,9 @@ export default class Precarga extends Phaser.Scene {
     this.load.tilemapTiledJSON("map_tablero", 'public/assets/tilemaps/tablero.json');
     this.load.image('tiledBackground', 'public/assets/images/fondo-tablero.jpg');
     this.load.image('tiledCasillas', 'public/assets/images/casillas-atlas.png');
-    this.load.image("casillaVacia", 'public/assets/images/casillas/casilla-vacia.png')
+    // this.load.image("casillaVacia", 'public/assets/images/casillas/casilla-vacia.png');
+    this.load.image("casillaInvisible", 'public/assets/images/casillas/casilla-invisible.png');
+
   }
   create() {
     this.add.text(400, 300, "Cargando!...");

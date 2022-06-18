@@ -365,7 +365,7 @@
                  "name":"18",
                  "point":true,
                  "rotation":0,
-                 "type":"casilla",
+                 "type":"vacia",
                  "visible":true,
                  "width":0,
                  "x":1002.21,
@@ -745,16 +745,6 @@
          "spacing":0,
          "tilecount":6,
          "tileheight":80,
-         "tiles":[
-                {
-                 "id":0,
-                 "properties":[
-                        {
-                         "name":"overlap",
-                         "type":"bool",
-                         "value":true
-                        }]
-                }],
          "tilewidth":80
         }],
  "tilewidth":80,
