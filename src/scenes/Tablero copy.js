@@ -5,7 +5,7 @@ import Player from "../js/objects/Player.js";
 // let casillaBody;
 // let posActual;
 // let casillasLayer, map, casillasGroup
-let jugadorActual;
+
 export default class Tablero extends Phaser.Scene {
     initTiempo = 15;
     players;
@@ -35,15 +35,12 @@ export default class Tablero extends Phaser.Scene {
     }
     init(data) {
         this.players = data.players;
-
         this.player1 = this.players.player1;
         this.player2 = this.players.player2;
-        this.player3 = this.players.player3;
-        this.player4 = this.players.player4;
 
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
-        this.initTiempo = 60;
+        this.initTiempo = 15;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -68,94 +65,54 @@ export default class Tablero extends Phaser.Scene {
 
         this.player1 = new Player(
             this,
-            salida.x - 30,
+            salida.x,
             salida.y,
             this.player1.texture,
             null,
             this.player1.name,
-            this.player1.color,
-            this.initTiempo,
-            this.map,
-            this.posActual
+            this.player1.color
         );
-        this.player2 = new Player(
-            this,
-            salida.x + 30,
-            salida.y - 15,
-            this.player2.texture,
-            null,
-            this.player2.name,
-            this.player2.color,
-            this.initTiempo,
-            this.map,
-            this.posActual
+        this.groupCasillaConsecuencia = this.physics.add.group();
+        this.casillasLayer.objects.forEach((casilla) => {
+            switch (casilla.type) {
+                case "consecuencia":
+                    this.crearCasilla(
+                        this.casillaInvisible,
+                        this.groupCasillaConsecuencia,
+                        casilla, (player, cas)=>this.casillaConsecuencia(player, cas)
+                    );
+                    break;
+            }
+        });
+        //3: le add un overlap. Para saber cuando el jugador pisa dicha casilla. Y poder manejar la cosecuencia.
+        // this.physics.add.overlap(
+        //     this.player1,
+        //     this.groupCasillaConsecuencia,
+        //     (player, cas) => {
+        //         this.actualizarPos(this.casillaId);
+        //         //Duda de esto. para la clase-
+        //         console.log(this.casillaId)
+        //         this.casillaConsecuencia(player, cas);
+        //     },
+        //     null,
+        //     this
+        // );
+
+        this.add.text(0, 0, this.player1.name, { color: "red" });
+        this.textDinero = this.add.text(
+            this.sys.game.config.width / 2,
+            this.sys.game.config.height - 100,
+            `$ 0`,
+            { fontFamily: "Arial", fontSize: 32, color: "red" }
         );
-        // this.player3 = new Player(
-        //     this,
-        //     salida.x,
-        //     salida.y - 30,
-        //     this.player3.texture,
-        //     null,
-        //     this.player3.name,
-        //     this.player3.color,
-        //     this.initTiempo,
-        //     this.map,
-        //     this.posActual
-        // );
-        // this.player4 = new Player(
-        //     this,
-        //     salida.x ,
-        //     salida.y + 30,
-        //     this.player4.texture,
-        //     null,
-        //     this.player4.name,
-        //     this.player4.color,
-        //     this.initTiempo,
-        //     this.map,
-        //     this.posActual
-        // );
-        // for(let player in this.players){
-        //     player = this.players[player];
-        //     console.log(player)
-        //     let indexNext = parseInt(player[player.length - 1]) + 1;
-        //     let nextPlayer = this.players["player" + indexNext];
-        //     nextPlayer = new Player(this,
-        //             salida.x - Phaser.Math.Between(0, 64) ,
-        //             salida.y - Phaser.Math.Between(0, 64),
-        //             player.texture,
-        //             null,
-        //             player.name,
-        //             player.color,
-        //             this.initTiempo,
-        //             this.map,
-        //             this.posActual)
-        // }
-        
-
-
-        this.player1.setIsTurn = true;
-
-        this.players = { player1: this.player1, player2: this.player2 };
-
-        // this.groupCasillaConsecuencia = this.physics.add.group();
-        // this.casillasLayer.objects.forEach((casilla) => {
-        //     switch (casilla.type) {
-        //         case "consecuencia":
-        //             this.crearCasilla(
-        //                 this.casillaInvisible,
-        //                 this.groupCasillaConsecuencia,
-        //                 casilla, (player, cas)=>this.casillaConsecuencia(player, cas)
-        //             );
-        //             break;
-        //     }
-        // });
-
-        this.dadoPosition = objectsLayers.objects.find(
+        const dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
         );
         this.btnDado = this.add
-            .text(this.dadoPosition.x, this.dadoPosition.y, "TirarDado")
-            .setInteractive();
+            .text(dadoPosition.x, dadoPosition.y, "TirarDado")
+            .setInteractive()
+            .on("pointerdown", () => this.tirarDado(true));
+
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
@@ -164,15 +121,6 @@ export default class Tablero extends Phaser.Scene {
             () => this.scene.start("Inicio")
         );
 
-        this.textName = this.add.text(0, 0, this.player1.name, {
-            color: "red",
-        });
-        this.textCronometro = this.add.text(
-            this.sys.game.config.width / 2,
-            0,
-            `Tiempo: ${this.player1.getTimeTurn}`,
-            { color: "red" }
-        );
         this.tiempo = this.initTiempo;
         this.time.addEvent({
             delay: 1000,
@@ -180,39 +128,12 @@ export default class Tablero extends Phaser.Scene {
             callbackScope: this,
             loop: true,
         });
-    }
-
-    update() {
-        this.sistemaDeTurnos(this.player1, this.player2);
-        this.sistemaDeTurnos(this.player2, this.player1);
-    }
-    sistemaDeTurnos(player1, player2, clickOnButton = true) {
-        if (player1.getIsTurn && !player2.getIsTurn) {
-            jugadorActual = player1;
-            this.textName.setText(player1.getName);
-
-            //Para que se pueda tirar el dado.
-            player1.setCanThrowDice = true;
-            player2.setCanThrowDice = false;
-
-            if (clickOnButton) {
-                this.btnDado.on("pointerdown", () => {
-                    player1.tirarDado(clickOnButton);
-                    player1.setTimeTurn = this.initTiempo;
-                    this.tiempo = this.initTiempo;
-                    this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-                    player1.setIsTurn = false;
-                    player2.setIsTurn = true;
-                });
-                return
-            }
-            player1.tirarDado(false);
-            player1.setTimeTurn = this.initTiempo;
-            this.tiempo = this.initTiempo;
-            this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-            player1.setIsTurn = false;
-            player2.setIsTurn = true;
-        }
+        this.textCronometro = this.add.text(
+            this.sys.game.config.width / 2,
+            0,
+            `Tiempo: ${this.tiempo}`,
+            { color: "red" }
+        );
     }
     crearCasilla(casillaBody, grupo, casilla, callback) {
         /*
@@ -240,25 +161,60 @@ export default class Tablero extends Phaser.Scene {
         this.tiempo -= 1;
         this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
         if (this.tiempo <= 0) {
-            let jugadorAct, jugadorCambio;
-            for (let player in this.players) {
-                let playerObj = this.players[player];
-                if (playerObj.getIsTurn) jugadorAct = playerObj;
-            }
-            for (let player in this.players) {
-                let playerObj = this.players[player];
-                if (!playerObj.getIsTurn) jugadorCambio = playerObj;
-            }
-            this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
-            // jugadorActual.tirarDado(false);
-            console.log(jugadorAct.getName);
-            console.log(jugadorCambio.getName);
+            console.log("Sin tiempo");
+            this.tirarDado(false);
             this.tiempo = this.initTiempo;
         }
     }
     actualizarPos(id) {
         this.posActual = parseInt(id);
     }
+    tirarDado(click = false) {
+        if (click) {
+            this.numeroDelDado = Phaser.Math.Between(1, 6);
+            this.moverJugador(this.numeroDelDado);
+            this.tiempo = this.initTiempo;
+        } else {
+            this.moverJugador();
+            this.tiempo = this.initTiempo;
+        }
+    }
+    moverJugador(dado = 1) {
+        // console.log("----------------");
+        // console.log("Posactul ", this.posActual);
+        // console.log("Dado ", dado);
+        // console.log("----------------");
+        this.posActual += dado;
+
+        if (this.posActual > this.posLlegada) {
+            // this.numeroDelDado = 0;
+            this.posActual = this.posActual - dado;
+        }
+        if (this.posActual === this.posLlegada) {
+            this.scene.start("Ganador", this.player1);
+        }
+        this.soloMover(this.posActual);
+
+        if (this.casillaDescativadaOverlap) {
+            this.casillaDescativadaOverlap.enableBody(
+                true,
+                this.casillaDescativadaOverlap.x,
+                this.casillaDescativadaOverlap.y,
+                true,
+                true
+            );
+        }
+    }
+    soloMover(pos) {
+        // console.log(typeof pos)
+        let spawnPoint = this.map.findObject(
+            "casillas",
+            (obj) => obj.name === pos.toString()
+        );
+        this.player1.setX(spawnPoint.x);
+        this.player1.setY(spawnPoint.y);
+    }
+
     casillaVacia(player, casillaBody) {
         casillaBody.disableBody(true, true);
         console.log("VACIA");

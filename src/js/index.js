@@ -1,4 +1,4 @@
 import { config } from "./config.js";
 
 
-var game = new Phaser.Game(config);
+window.game = new Phaser.Game(config);
