@@ -65,7 +65,7 @@ export default class Tablero extends Phaser.Scene {
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
         );
-
+        this.camara = this.cameras.main;
         // const meta = casillasLayer.objects.find((obj) => obj.name === "45");
 
         this.player1 = new Player(
@@ -92,46 +92,6 @@ export default class Tablero extends Phaser.Scene {
             this.map,
             this.posActual
         );
-        // this.player3 = new Player(
-        //     this,
-        //     salida.x,
-        //     salida.y - 30,
-        //     this.player3.texture,
-        //     null,
-        //     this.player3.name,
-        //     this.player3.color,
-        //     this.initTiempo,
-        //     this.map,
-        //     this.posActual
-        // );
-        // this.player4 = new Player(
-        //     this,
-        //     salida.x ,
-        //     salida.y + 30,
-        //     this.player4.texture,
-        //     null,
-        //     this.player4.name,
-        //     this.player4.color,
-        //     this.initTiempo,
-        //     this.map,
-        //     this.posActual
-        // );
-        // for(let player in this.players){
-        //     player = this.players[player];
-        //     console.log(player)
-        //     let indexNext = parseInt(player[player.length - 1]) + 1;
-        //     let nextPlayer = this.players["player" + indexNext];
-        //     nextPlayer = new Player(this,
-        //             salida.x - Phaser.Math.Between(0, 64) ,
-        //             salida.y - Phaser.Math.Between(0, 64),
-        //             player.texture,
-        //             null,
-        //             player.name,
-        //             player.color,
-        //             this.initTiempo,
-        //             this.map,
-        //             this.posActual)
-        // }
 
         this.player1.setIsTurn = true;
         this.players = { player1: this.player1, player2: this.player2 };
@@ -156,6 +116,7 @@ export default class Tablero extends Phaser.Scene {
         this.btnDado = this.add
             .text(this.dadoPosition.x, this.dadoPosition.y, "TirarDado")
             .setInteractive();
+        this.btnDado.visible = false;
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
@@ -183,8 +144,34 @@ export default class Tablero extends Phaser.Scene {
     }
 
     update() {
-        this.sistemaDeTurnos(this.player1, this.player2);
-        this.sistemaDeTurnos(this.player2, this.player1);
+        this.sistemaDeTurnos(this.player1, this.player2, true);
+        this.sistemaDeTurnos(this.player2, this.player1, true);
+    }
+    actualizarPos(id) {
+        this.posAnterior = this.posActual;
+        this.posActual = parseInt(id);
+    }
+    resetTime(player) {
+        player.setTimeTurn = this.initTiempo;
+        this.tiempo = this.initTiempo;
+    }
+    cambiarTurnos(player1, player2) {
+        player1.setIsTurn = false;
+        player2.setIsTurn = true;
+    }
+    pierdeTurno(player1, player2) {
+        //Si el jugador1 pierde su turno, sigue jugando el jugador2.
+        /*Verifico si el contador de turnos perdidos/acomulados es mayor o igual a 1. Y si  el jugador no se puede mover*/
+        if (player1.getCountTurn >= 1 && player1.getCanMove === false) {
+            //Setteo todo de nuevo
+            player1.setCountTurn = 0;
+            player1.setCanMove = true;
+
+            this.resetTime(player1);
+            //Seteo la secuencia de quien sigue el turno
+            this.cambiarTurnos(player1, player2);
+            return;
+        }
     }
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
         if (player1.getIsTurn && !player2.getIsTurn) {
@@ -194,43 +181,27 @@ export default class Tablero extends Phaser.Scene {
             //Para que se pueda tirar el dado.
             player1.setCanThrowDice = true;
             player2.setCanThrowDice = false;
-            //Si pierdo un turno Y el proximo turno es igual a falso == Pierdon el turno** Si no tiro el dado
-            if (player1.getCountTurn >= 1 && !player1.nextTurn) {
-                player1.setCountTurn = 0;
-                player1.setNextTurn = true;
-                player1.setIsTurn = false;
-                player2.setIsTurn = true;
-                console.log("Pierdiste este turno.");
-                return;
-            }
-            //Si el jugador da click, tira el dado
+
+            this.pierdeTurno(player1, player2);
+
+            //Si el jugador da click, tira el dado.
+            this.btnDado.visible = true;
             if (clickOnButton) {
                 this.btnDado.on("pointerdown", () => {
                     player1.tirarDado(clickOnButton);
-                    player1.setTimeTurn = this.initTiempo;
-                    this.tiempo = this.initTiempo;
+                    this.resetTime(player1);
                     this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-                    player1.setIsTurn = false;
-                    player2.setIsTurn = true;
-                    this.reactivarCasillaMecanica()
+                    this.cambiarTurnos(player1, player2);
+                    this.btnDado.visible = false;
                 });
                 return;
             }
             //Si no da click, se mueve uno.
             player1.tirarDado(false);
-            player1.setTimeTurn = this.initTiempo;
-            this.tiempo = this.initTiempo;
+            this.resetTime(player1);
             this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-            player1.setIsTurn = false;
-            player2.setIsTurn = true;
-            if (this.casillaDescativadaOverlap)
-                this.casillaDescativadaOverlap.enableBody(
-                    true,
-                    this.casillaDescativadaOverlap.x,
-                    this.casillaDescativadaOverlap.y,
-                    true,
-                    true
-                );
+            this.cambiarTurnos(player1, player2);
+            this.btnDado.visible = false;
         }
     }
     crearCasilla(casillaBody, grupo, casilla, callback) {
@@ -273,23 +244,28 @@ export default class Tablero extends Phaser.Scene {
             for (let player in this.players) {
                 let playerObj = this.players[player];
                 if (playerObj.getIsTurn) jugadorAct = playerObj;
-                for (let player in this.players) {
-                    let playerObj = this.players[player];
-                    if (!playerObj.getIsTurn) jugadorCambio = playerObj;
-                    this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
-                }
             }
-            
-            
-            // jugadorActual.tirarDado(false);
-            // console.log(jugadorAct.getName);
-            // console.log(jugadorCambio.getName);
+            for (let player in this.players) {
+                let playerObj = this.players[player];
+                if (!playerObj.getIsTurn) jugadorCambio = playerObj;
+            }
+            this.sistemaDeTurnos(jugadorAct, jugadorCambio, false);
             this.tiempo = this.initTiempo;
         }
     }
-    actualizarPos(id) {
-        this.posAnterior = this.posActual;
-        this.posActual = parseInt(id);
+    retrocederCasillas(player, num, anteriorPos, posActual) {
+        let nuevaPos = this.posActual - num;
+        if (nuevaPos <= 0) {
+            posActual = 1;
+            player.soloMover(posActual);
+            this.player1.setIsTurn = false;
+            this.player2.setIsTurn = true;
+            return;
+        }
+        posActual = nuevaPos;
+        player.soloMover(posActual);
+        this.player1.setIsTurn = false;
+        this.player2.setIsTurn = true;
     }
     casillaVacia(player, casillaBody) {
         casillaBody.disableBody(true, true);
@@ -303,32 +279,21 @@ export default class Tablero extends Phaser.Scene {
         casillaBody.disableBody(true, true);
         this.casillaDescativadaOverlap = casillaBody;
 
-        const numeroRandom = Phaser.Math.Between(1, 3);
-
+        const numeroRandom = Phaser.Math.Between(1, 4);
         switch (numeroRandom) {
             case 1:
                 console.warn("Pierdes el turno");
                 console.error(player.getName);
-                player.setNextTurn = false;
+                player.setCanMove = false;
                 player.setCountTurn = 1;
                 break;
             case 2:
                 console.warn("Retrocede 4 casillas");
                 console.error(player.getName);
                 player.setIsTurn = false;
+                player.setCanThrowDice = false;
                 setTimeout(() => {
-                    let nuevaPos = this.posActual - 4;
-                    if (nuevaPos <= 0) {
-                        this.posActual = 1;
-                        console.warn("Ahora: ", this.posActual);
-                        player.soloMover(this.posActual);
-                        this.reactivarCasillaMecanica()
-                        return;
-                    }
-                    this.posActual = nuevaPos;
-                    console.warn("Ahora: ", this.posActual);
-                    player.soloMover(this.posActual);
-                    this.reactivarCasillaMecanica()
+                    this.retrocederCasillas(player, 4, null, this.posActual);
                 }, 3000);
                 break;
 
@@ -347,37 +312,13 @@ export default class Tablero extends Phaser.Scene {
                             jugadorAfectado.getName
                         );
                         setTimeout(() => {
-                            console.log(
-                                "Estaba en: ",
-                                jugadorAfectado.getPosJugador
+                            this.posActual = jugadorAfectado.getPosJugador;
+                            this.retrocederCasillas(
+                                jugadorAfectado,
+                                4,
+                                null,
+                                this.posActual
                             );
-                            let posicionDelContricante =
-                                jugadorAfectado.getPosJugador - 4;
-
-                            if (posicionDelContricante <= 0) {
-                                posicionDelContricante = 1;
-                                // console.warn("Ahora: ", posicionDelContricante);
-                                console.log(
-                                    "Y ahora esta en:",
-                                    posicionDelContricante
-                                );
-                                jugadorAfectado.soloMover(
-                                    posicionDelContricante
-                                );
-                                this.reactivarCasillaMecanica()
-                                player.setAfectarContricante = false;
-                                return;
-                            }
-                            jugadorAfectado.setPosJugador =
-                                posicionDelContricante;
-                            this.posActual = posicionDelContricante;
-                            // console.warn("Ahora: ", this.posActual);
-                            console.log(
-                                "Y ahora esta en:",
-                                posicionDelContricante
-                            );
-                            jugadorAfectado.soloMover(this.posActual);
-                            this.reactivarCasillaMecanica()
                             player.setAfectarContricante = false;
                         }, 3000);
                     }
@@ -388,7 +329,7 @@ export default class Tablero extends Phaser.Scene {
                 console.error(player.getName);
                 setTimeout(() => {
                     player.soloMover(1);
-                    this.reactivarCasillaMecanica()
+                    this.camara.shake(200);
                 }, 3000);
                 break;
         }
@@ -399,7 +340,8 @@ export default class Tablero extends Phaser.Scene {
                 true,
                 this.casillaDescativadaOverlap.x,
                 this.casillaDescativadaOverlap.y,
-                true, false
+                true,
+                false
             );
     }
 }

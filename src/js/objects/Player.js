@@ -22,7 +22,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.isTurn = false;
         this.canThrowDice = false;
         this.canPlay = true;
-        this.canMove = false;
+        this.canMove = true;
         this.wallet = 0;
         this.canBuy = true;
         this.invetory = {
@@ -32,7 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.posJugador = posJugador;
         this.map = map;
-        this.nextTurn = true;
+        // this.nextTurn = false;
         this.countTurn = 0;
         this.afectarContricante = false;
         // this.setScale(0.5)
@@ -96,12 +96,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     set setPosJugador(num){
         this.posJugador = num;
     }
-    get getNextTurn() {
-        return  this.nextTurn;
-    }
-    set setNextTurn(bool){
-        this.nextTurn = bool;
-    }
+    // get getNextTurn() {
+    //     return  this.nextTurn;
+    // }
+    // set setNextTurn(bool){
+    //     this.nextTurn = bool;
+    // }
     get getCountTurn(){
         return this.countTurn;
     }
@@ -134,40 +134,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setCanThrowDice = false;
     }
     tirarDado(isClick = false) {
-        if (this.getCanThrowDice && this.nextTurn) {
+        if (this.getCanThrowDice && this.getCanMove) {
             if (isClick) {
                 let numeroDelDado = Phaser.Math.Between(1, 6);
                 this.mover(numeroDelDado);
                 // this.setTimeTurn = this.timeTurn;
-                
             } else {
-                console.log('Aca toy')
                 this.mover(1);
                 // this.setTimeTurn = this.timeTurn;
             }
         }
     }
-
-    // moverJugador(dado = 1) {
-    //     // console.log("----------------");
-    //     // console.log("Posactul ", this.posActual);
-    //     // console.log("Dado ", dado);
-    //     // console.log("----------------");
-
-    //     this.soloMover(this.posActual);
-
-    //     if (this.casillaDescativadaOverlap) {
-    //         this.casillaDescativadaOverlap.enableBody(
-    //             true,
-    //             this.casillaDescativadaOverlap.x,
-    //             this.casillaDescativadaOverlap.y,
-    //             true,
-    //             true
-    //         );
-    //     }
-    // }
     soloMover(pos) {
-        // console.log(typeof pos)
         this.setPosJugador = pos;
         let spawnPoint = this.map.findObject(
             "casillas",
