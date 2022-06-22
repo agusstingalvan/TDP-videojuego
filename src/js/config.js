@@ -9,7 +9,7 @@ import Ganador from "../scenes/Ganador.js";
 export const config = {
     type: Phaser.AUTO,
     width: 1280,
-    height: 720,
+    height: 768,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -19,7 +19,7 @@ export const config = {
         },
         max: {
             width: 1280,
-            height: 720,
+            height: 768,
         },
     },
     physics: {

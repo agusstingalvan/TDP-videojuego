@@ -62,6 +62,8 @@ export default class Tablero extends Phaser.Scene {
         const objectsLayers = this.map.getObjectLayer("objetos");
         this.casillasLayer = this.map.getObjectLayer("casillas");
 
+        casillas.setCollisionByProperty({ collides: true });
+
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
         );
@@ -100,6 +102,7 @@ export default class Tablero extends Phaser.Scene {
         this.casillasLayer.objects.forEach((casilla) => {
             switch (casilla.type) {
                 case "consecuencia":
+                    // this.physics.add.overlap(this.player1, casilla, (player, cas) => console.log(cas), null, this)
                     this.crearCasilla(
                         this.casillaInvisible,
                         this.groupCasillaConsecuencia,
@@ -109,7 +112,7 @@ export default class Tablero extends Phaser.Scene {
                     break;
             }
         });
-
+        
         this.dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
         );
@@ -141,6 +144,8 @@ export default class Tablero extends Phaser.Scene {
             callbackScope: this,
             loop: true,
         });
+        this.textoEdit = this.add.text(640, 384, 'TEXTO', {color: "black", backgroundColor: 'white', padding: 10});
+        this.textoEdit.visible = false;
     }
 
     update() {
@@ -156,6 +161,8 @@ export default class Tablero extends Phaser.Scene {
         this.tiempo = this.initTiempo;
     }
     cambiarTurnos(player1, player2) {
+        this.tiempo = this.initTiempo;
+        this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
         player1.setIsTurn = false;
         player2.setIsTurn = true;
     }
@@ -174,8 +181,13 @@ export default class Tablero extends Phaser.Scene {
         }
     }
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
+        setTimeout(()=>{
+            
+        }, 5000)
         if (player1.getIsTurn && !player2.getIsTurn) {
             jugadorActual = player1;
+            // this.textCronometro.setText(`Tiempo: ${this.player1.getTimeTurn}`);
+            
             this.textName.setText(player1.getName);
 
             //Para que se pueda tirar el dado.
@@ -212,9 +224,12 @@ export default class Tablero extends Phaser.Scene {
          4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
          5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
         */
+
+        //  console.log('Si se creo')
+
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = true;
+        casillaBody.visible = false;
         this.physics.add.overlap(
             this.player1,
             casillaBody,
@@ -276,13 +291,16 @@ export default class Tablero extends Phaser.Scene {
         4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
         5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
         */
+    //    console.log( casillaBody);
         casillaBody.disableBody(true, true);
         this.casillaDescativadaOverlap = casillaBody;
 
         const numeroRandom = Phaser.Math.Between(1, 4);
-        switch (numeroRandom) {
+        switch (1) {
             case 1:
                 console.warn("Pierdes el turno");
+                this.textoEdit.setText("Pierdes el turno");
+                this.textoEdit.visible = true;
                 console.error(player.getName);
                 player.setCanMove = false;
                 player.setCountTurn = 1;

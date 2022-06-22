@@ -5,14 +5,14 @@ let canEdit = true;
 let players = {
     player1: {
         name: "Jugador 1",
-        x: 150,
+        x: 500,
         y: 300,
         color: "0x32a852",
         texture: "duckWhite",
     },
     player2: {
         name: "Jugador 2",
-        x: 325,
+        x: 700,
         y: 300,
         color: "0xa8323a",
         texture: "duckWhite",
@@ -46,7 +46,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         }
         
         const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45) , "btnCerrar", () => this.scene.start("Inicio"));
-        const btnListo = new Button(this, 400, 500, "btnListo", () => this.scene.start("Tablero", { players }))
+        const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, "boton-listo", () => this.scene.start("Tablero", { players }))
     }
 
     createInputs(nameText, playerObj) {
