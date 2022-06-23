@@ -5,14 +5,14 @@ let canEdit = true;
 let players = {
     player1: {
         name: "Jugador 1",
-        x: 500,
+        x: 525,
         y: 300,
-        color: "0x32a852",
+        color: "0xedd500",
         texture: "duckWhite",
     },
     player2: {
         name: "Jugador 2",
-        x: 700,
+        x: 725,
         y: 300,
         color: "0xa8323a",
         texture: "duckWhite",
@@ -28,7 +28,7 @@ let players = {
     //     name: "Jugador 4",
     //     x: 675,
     //     y: 300,
-    //     color: "0x000ced",
+    //     color: "0x000ced","0x32a852"
     //     texture: "duckWhite",
     // },
 };
@@ -41,7 +41,9 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
             this.add.image(x, y, texture).setTint(color);
-            let nameText = this.add.text(x, y + 50, name).setOrigin(0.5);
+            let nameText = this.add.text(x, y + 50, name, {
+                fontStyle: 'bold'
+            }).setOrigin(0.5);
             this.createInputs(nameText, playerObj);
         }
         

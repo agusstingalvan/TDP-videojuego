@@ -18,6 +18,7 @@ export default class Precarga extends Phaser.Scene {
     this.load.image("boton-opciones", "public/assets/images/botones/botones-rojos/boton-opciones.png");
     this.load.image("boton-creditos", "public/assets/images/botones/botones-rojos/boton-creditos.png");
     this.load.image("btnCerrar", "public/assets/images/botones/botones-rojos/boton-cerrar.png");
+    this.load.image("boton-dado", "public/assets/images/botones/boton-dado.png");
     
     this.load.image("lapizEdit", "public/assets/images/botones/lapiz-edit.png");
     this.load.image("btnCheck", "public/assets/images/botones/boton-check.png");
