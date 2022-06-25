@@ -7,15 +7,15 @@ let players = {
         name: "Jugador 1",
         x: 525,
         y: 300,
-        color: "0xedd500",
-        texture: "duckWhite",
+        // color: "0xedd500",
+        texture: "pato-bruja",
     },
     player2: {
         name: "Jugador 2",
         x: 725,
         y: 300,
-        color: "0xa8323a",
-        texture: "duckWhite",
+        // color: "0xa8323a",
+        texture: "pato-galera",
     },
     // player3: {
     //     name: "Jugador 3",
@@ -37,28 +37,31 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         super("SeleccionPersonajes");
     }
     create() {
+        this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'bg_seleccion_personajes')
         for (let player in players) {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
-            this.add.image(x, y, texture).setTint(color);
-            let nameText = this.add.text(x, y + 50, name, {
+            this.add.rectangle(x, y + 5, 84, 84, '0x0B4551')
+            this.data = this.add.sprite(x, y, 'atlas_patos_static', texture, {frameWidth: 64, frameHeight: 64} ).setTint(color);
+            let nameText = this.add.text(x, y + 70, name, {
                 fontStyle: 'bold'
             }).setOrigin(0.5);
+            
             this.createInputs(nameText, playerObj);
         }
         
-        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45) , "btnCerrar", () => this.scene.start("Inicio"));
-        const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, "boton-listo", () => this.scene.start("Tablero", { players }))
+        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45),'botones' , "boton-cerrar", () => this.scene.start("Inicio"));
+        const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, 'botones',"boton-listo", () => this.scene.start("Tablero", { players }))
     }
 
     createInputs(nameText, playerObj) {
         let btnEdit, btnReady;
         btnEdit = this.add
-            .image(nameText.x + 80, 350, "lapizEdit")
+            .image(nameText.x + 80, 370, "lapizEdit")
             .setOrigin(0.5)
             .setInteractive();
         btnReady = this.add
-            .image(nameText.x + 80, 350, "btnCheck")
+            .image(nameText.x + 80, 370, "btnCheck")
             .setOrigin(0.5)
             .setInteractive();
         btnReady.visible = false;

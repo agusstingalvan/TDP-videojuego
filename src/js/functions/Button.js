@@ -1,9 +1,9 @@
 export default class Button {
-    constructor(scene, x, y, texture, callback) {
+    constructor(scene, x, y, atlas,  texture, callback) {
         const button = scene.add
-            .image(x, y, texture)
+            .image(x, y, atlas, texture)
             .setOrigin(0.5)
-            .setInteractive()
+            .setInteractive({ useHandCursor: true })
             .on("pointerdown", ()=>callback())
     }
 }

@@ -74,8 +74,8 @@ export default class Tablero extends Phaser.Scene {
             this,
             salida.x - 30,
             salida.y,
-            this.player1.texture,
-            null,
+            'atlas_patos_static',
+            'pato-bruja',
             this.player1.name,
             this.player1.color,
             this.initTiempo,
@@ -86,8 +86,8 @@ export default class Tablero extends Phaser.Scene {
             this,
             salida.x + 30,
             salida.y - 15,
-            this.player2.texture,
-            null,
+            'atlas_patos_static',
+            'pato-galera',
             this.player2.name,
             this.player2.color,
             this.initTiempo,
@@ -95,6 +95,8 @@ export default class Tablero extends Phaser.Scene {
             this.posActual
         );
 
+
+            // this.player2.play('pato-bruja-move', true);
         this.player1.setIsTurn = true;
         this.players = { player1: this.player1, player2: this.player2 };
 
@@ -125,8 +127,8 @@ export default class Tablero extends Phaser.Scene {
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
-            this.sys.game.config.height - (this.sys.game.config.height - 45),
-            "btnCerrar",
+            this.sys.game.config.height - (this.sys.game.config.height - 45), 'botones',
+            "boton-cerrar",
             () => this.scene.start("Inicio")
         );
 
@@ -189,20 +191,19 @@ export default class Tablero extends Phaser.Scene {
             
             jugadorActual = player1;
             // this.textCronometro.setText(`Tiempo: ${this.player1.getTimeTurn}`);
-            
-            this.textName.setText(player1.getName);
+            // console.log(jugadorActual.getName)
+            this.textName.setText(jugadorActual.getName);
 
             //Para que se pueda tirar el dado.
-            player1.setCanThrowDice = true;
+            jugadorActual.setCanThrowDice = true;
             player2.setCanThrowDice = false;
 
-            this.pierdeTurno(player1, player2);
+            this.pierdeTurno(jugadorActual, player2);
 
             //Si el jugador da click, tira el dado.
             this.btnDado.visible = true;
             if (clickOnButton) {
                 this.btnDado.on("pointerdown", () => {
-                    player1.tirarDado(clickOnButton);
                     this.tweens.add({
                         targets: this.btnDado,
                         duration: 1000,
@@ -210,10 +211,16 @@ export default class Tablero extends Phaser.Scene {
                         ease: 'Power3',  
                         repeat: 0,     
                         yoyo: false,
+                        onStart: ()=>{
+                            jugadorActual.play(`${jugadorActual.animacion}-move`, false).on('animationcomplete', ()=>{ 
+                                jugadorActual.play(`${jugadorActual.animacion}-idle`, false)
+                            }, this)
+                        },
                         onComplete: ()=>{
-                            this.resetTime(player1);
+                            jugadorActual.tirarDado(clickOnButton);
+                            this.resetTime(jugadorActual);
                             this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-                            this.cambiarTurnos(player1, player2);
+                            this.cambiarTurnos(jugadorActual, player2);
                             this.btnDado.visible = false;
                             this.textoEdit.visible = false;
                             this.textoEdit.setText("");

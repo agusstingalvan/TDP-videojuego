@@ -11,8 +11,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         map,
         posJugador
     ) {
-        super(scene, x, y, texture);
+        super(scene, x, y, texture, frame);
         this.scene = scene;
+        this.animacion = frame;
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.allowGravity = false;
@@ -36,6 +37,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.countTurn = 0;
         this.afectarContricante = false;
         // this.setScale(0.5)
+        this.anims.play(`${this.animacion}-idle`, true)
     }
 
     get getTimeTurn() {
@@ -137,12 +139,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.getCanThrowDice && this.getCanMove) {
             if (isClick) {
                 let numeroDelDado = Phaser.Math.Between(1, 6);
-                this.mover(numeroDelDado);
+                this.mover(numeroDelDado)
                 // this.setTimeTurn = this.timeTurn;
             } else {
                 this.mover(1);
                 // this.setTimeTurn = this.timeTurn;
             }
+            
         }
     }
     soloMover(pos) {
