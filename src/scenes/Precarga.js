@@ -25,6 +25,7 @@ export default class Precarga extends Phaser.Scene {
             "public/assets/images/atlas/atlas_patos_spritesheet.png",
             "public/assets/images/atlas/atlas_patos_spritesheet.json"
         );
+        this.load.image('popup_contenedor', 'public/assets/images/popups/popup_contenedor.png');
         // this.load.sprite('pato-bruja-spritesheet', '/pato-bruja', {frameWidth: 64, frameHeight: 64})
         this.load.spritesheet(
             "spritesheet-pato-bruja",
@@ -141,8 +142,7 @@ export default class Precarga extends Phaser.Scene {
             frameRate: 15,
             repeat: 0,
         });
-      setTimeout(() => this.scene.start("Inicio"), 1000);
-
+      this.scene.start("Inicio")
     }
     
 }

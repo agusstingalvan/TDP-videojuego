@@ -20,7 +20,7 @@ export default class Tablero extends Phaser.Scene {
     textCronometro;
 
     map;
-    posSalida = 1;
+    posSalida = 2;
     posLlegada = 45;
     posActual = this.posSalida;
     // casillaBody;
@@ -30,10 +30,14 @@ export default class Tablero extends Phaser.Scene {
     casillasLayer;
     casillasGroup;
     casillaDescativadaOverlap;
+    isChangeTurn;
+    isClickBtnDado;
+
     constructor() {
         super("Tablero");
     }
     init(data) {
+        //Inicializacion
         this.players = data.players;
 
         this.player1 = this.players.player1;
@@ -45,7 +49,9 @@ export default class Tablero extends Phaser.Scene {
 
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
-        this.initTiempo = 15;
+        this.initTiempo = 3;
+        this.isChangeTurn = false;
+        this.isClickBtnDado = false;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -74,8 +80,8 @@ export default class Tablero extends Phaser.Scene {
             this,
             salida.x - 30,
             salida.y,
-            'atlas_patos_static',
-            'pato-bruja',
+            "atlas_patos_static",
+            "pato-bruja",
             this.player1.name,
             this.player1.color,
             this.initTiempo,
@@ -86,8 +92,8 @@ export default class Tablero extends Phaser.Scene {
             this,
             salida.x + 30,
             salida.y - 15,
-            'atlas_patos_static',
-            'pato-galera',
+            "atlas_patos_static",
+            "pato-galera",
             this.player2.name,
             this.player2.color,
             this.initTiempo,
@@ -95,11 +101,9 @@ export default class Tablero extends Phaser.Scene {
             this.posActual
         );
 
-
-            // this.player2.play('pato-bruja-move', true);
         this.player1.setIsTurn = true;
         this.players = { player1: this.player1, player2: this.player2 };
-
+        // this.player1.anims.play(`pato-bruja-idle`)
         this.groupCasillaConsecuencia = this.physics.add.group();
         this.casillasLayer.objects.forEach((casilla) => {
             switch (casilla.type) {
@@ -114,44 +118,87 @@ export default class Tablero extends Phaser.Scene {
                     break;
             }
         });
-        
+
         this.dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
         );
         this.btnDado = this.add
             .image(this.dadoPosition.x, this.dadoPosition.y, "boton-dado")
             .setInteractive({
-                useHandCursor: true
-               });
-        this.btnDado.visible = false;
+                useHandCursor: true,
+            });
+        // this.btnDado.visible = false;
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
-            this.sys.game.config.height - (this.sys.game.config.height - 45), 'botones',
+            this.sys.game.config.height - (this.sys.game.config.height - 45),
+            "botones",
             "boton-cerrar",
             () => this.scene.start("Inicio")
         );
 
         this.textName = this.add.text(200, 650, this.player1.name, {
-            color: "red", backgroundColor: 'white', padding: 10, fontStyle: 'bold'
+            color: "red",
+            backgroundColor: "white",
+            padding: 10,
+            fontStyle: "bold",
         });
         this.textCronometro = this.add.text(
             this.sys.game.config.width / 2,
             0,
             `Tiempo: ${this.player1.getTimeTurn}`,
             {
-                color: "red", backgroundColor: 'white', padding: 10, fontStyle: 'bold'
+                color: "red",
+                backgroundColor: "white",
+                padding: 10,
+                fontStyle: "bold",
             }
         );
         this.tiempo = this.initTiempo;
-        this.time.addEvent({
+        this.cronometro = this.time.addEvent({
             delay: 1000,
-            callback: this.cronometro,
+            callback: this.onCronometro,
             callbackScope: this,
             loop: true,
+            startAt: this.tiempo,
         });
-        this.textoEdit = this.add.text(640, 384, 'TEXTO', {color: "black", backgroundColor: 'white', padding: 10});
+        this.textoEdit = this.add.text(640, 384, "TEXTO", {
+            color: "black",
+            backgroundColor: "white",
+            padding: 10,
+        });
         this.textoEdit.visible = false;
+
+        this.basePopUp = this.add
+            .image(0, 0, "popup_contenedor")
+            .setOrigin(0.5);
+        this.textoTurno = this.add
+            .text(0, 0 - 16, "Turno de:", { fontSize: 24, fontStyle: "bold" })
+            .setOrigin(0.5);
+        this.textoTurnoNombre = this.add
+            .text(0, 0 + 16, "Jugador 1", { fontSize: 20 })
+            .setOrigin(0.5);
+
+        this.popUpContenedor = this.add.container(
+            this.sys.game.config.width / 2,
+            this.sys.game.config.height / 2,
+            [this.basePopUp, this.textoTurno, this.textoTurnoNombre]
+        );
+        this.popUpContenedor.visible = false;
+
+       
+        this.basePopUp2 = this.add
+            .image(0, 0, "popup_contenedor")
+            .setOrigin(0.5)
+        this.textoConsecuencia = this.add
+        .text(0, 0 + 16, "Consecuencia", { fontSize: 20 })
+        .setOrigin(0.5);
+        this.popUpContenedorConsecuencias = this.add.container(
+            this.sys.game.config.width / 2,
+            this.sys.game.config.height / 2,
+            [this.basePopUp2, this.textoConsecuencia]
+        );
+        this.popUpContenedorConsecuencias.visible = false;
     }
 
     update() {
@@ -160,17 +207,42 @@ export default class Tablero extends Phaser.Scene {
     }
     actualizarPos(id) {
         this.posAnterior = this.posActual;
-        this.posActual = parseInt(id);
     }
     resetTime(player) {
         player.setTimeTurn = this.initTiempo;
         this.tiempo = this.initTiempo;
+        // this.cronometro.reset({
+        //     delay: 1000,
+        //     callback: this.onCronometro,
+        //     callbackScope: this,
+        //     loop: true,
+        //     startAt: this.tiempo,
+        //     paused: false
+        // })
     }
     cambiarTurnos(player1, player2) {
-        this.tiempo = this.initTiempo;
-        this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-        player1.setIsTurn = false;
-        player2.setIsTurn = true;
+        // this.popUpContenedorConsecuencias.visible = false;
+            this.btnDado.visible = false;
+            this.tiempo = 5;
+            this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+            this.cronometro.reset({
+                delay: 1000,
+                callback: () => this.tiempoCronometroPopUp(player1, player2),
+                callbackScope: this,
+                loop: true,
+                startAt: this.tiempo,
+                paused: false,
+            });
+            player1.setIsTurn = false;
+            player2.setIsTurn = true;
+            this.textName.setText(player2.getName);
+            this.popUpContenedor.visible = true;
+
+        // player1.setIsTurn = false;
+        // player2.setIsTurn = true;
+        // this.btnDado.visible = true;
+        // this.tiempo = this.initTiempo;
+        // this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
     }
     pierdeTurno(player1, player2) {
         //Si el jugador1 pierde su turno, sigue jugando el jugador2.
@@ -180,7 +252,6 @@ export default class Tablero extends Phaser.Scene {
             player1.setCountTurn = 0;
             player1.setCanMove = true;
 
-            this.resetTime(player1);
             //Seteo la secuencia de quien sigue el turno
             this.cambiarTurnos(player1, player2);
             return;
@@ -188,66 +259,105 @@ export default class Tablero extends Phaser.Scene {
     }
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
         if (player1.getIsTurn && !player2.getIsTurn) {
-            
             jugadorActual = player1;
+            this.pierdeTurno(jugadorActual, player2);
             // this.textCronometro.setText(`Tiempo: ${this.player1.getTimeTurn}`);
             // console.log(jugadorActual.getName)
-            this.textName.setText(jugadorActual.getName);
-
+            
+            this.textoTurnoNombre.setText(`${player1.getName}`);
             //Para que se pueda tirar el dado.
             jugadorActual.setCanThrowDice = true;
             player2.setCanThrowDice = false;
 
-            this.pierdeTurno(jugadorActual, player2);
+            
+            // this.btnDado.visible = true;
+            // jugadorActual.anims.play(`${jugadorActual.animacion}-idle`, false);
 
             //Si el jugador da click, tira el dado.
-            this.btnDado.visible = true;
             if (clickOnButton) {
+                this.isClickBtnDado = true;
                 this.btnDado.on("pointerdown", () => {
                     this.tweens.add({
                         targets: this.btnDado,
                         duration: 1000,
                         rotation: 360,
-                        ease: 'Power3',  
-                        repeat: 0,     
+                        ease: "Power3",
+                        repeat: 0,
                         yoyo: false,
-                        onStart: ()=>{
-                            jugadorActual.play(`${jugadorActual.animacion}-move`, false).on('animationcomplete', ()=>{ 
-                                jugadorActual.play(`${jugadorActual.animacion}-idle`, false)
-                            }, this)
+                        onStart: () => {
+                            jugadorActual.anims.stop();
+                            jugadorActual.anims.play(
+                                `${jugadorActual.animacion}-move`,
+                                true
+                            );
+                            // this.btnDado.visible = false;
                         },
-                        onComplete: ()=>{
+                        onComplete: () => {
+                            // jugadorActual.anims.playReverse(`${jugadorActual.animacion}-move`).on("animationstart", ()=>console.log('inico')).on("animationcomplete", ()=> {
+
+                            // })
+                            // jugadorActual.anims.playReverse(`${jugadorActual.animacion}-move`, true)
                             jugadorActual.tirarDado(clickOnButton);
-                            this.resetTime(jugadorActual);
-                            this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-                            this.cambiarTurnos(jugadorActual, player2);
-                            this.btnDado.visible = false;
                             this.textoEdit.visible = false;
                             this.textoEdit.setText("");
-                        }
-                    })
-                    
+                            this.resetTime(player1);
+                            this.textCronometro.setText(
+                                `Tiempo: ${this.tiempo}`
+                            );
+                            this.cronometro.paused = true;
+                            this.isChangeTurn = true;
+                            this.cambiarTurnos(jugadorActual, player2);
+                        },
+                    });
                 });
                 return;
             }
+
             //Si no da click, se mueve uno.
-            player1.tirarDado(clickOnButton);
-                    this.tweens.add({
-                        targets: this.btnDado,
-                        duration: 1000,
-                        rotation: 360,
-                        ease: 'Power3',  
-                        repeat: 0,     
-                        yoyo: false,
-                        onComplete: ()=>{
-                            this.resetTime(player1);
-                            this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-                            this.cambiarTurnos(player1, player2);
-                            this.btnDado.visible = false;
-                            this.textoEdit.visible = false;
-                            this.textoEdit.setText("");
-                        }
-                    })
+            this.isClickBtnDado = false;
+            this.tweens.add({
+                targets: this.btnDado,
+                duration: 1000,
+                rotation: 360,
+                ease: "Power3",
+                repeat: 0,
+                yoyo: false,
+                onStart: () => {
+                    jugadorActual.anims.stop();
+                    jugadorActual.anims.play(
+                        `${jugadorActual.animacion}-move`,
+                        true
+                    );
+                },
+                onComplete: () => {
+                    jugadorActual.tirarDado(clickOnButton);
+                    this.textoEdit.visible = false;
+                    this.textoEdit.setText("");
+                    this.resetTime(player1);
+                    this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+                    this.cronometro.paused = true;
+                    this.isChangeTurn = true;
+                    this.cambiarTurnos(jugadorActual, player2);
+                },
+            });
+            //Si no da click, se mueve uno.
+            // player1.tirarDado(clickOnButton);
+            //         this.tweens.add({
+            //             targets: this.btnDado,
+            //             duration: 1000,
+            //             rotation: 360,
+            //             ease: 'Power3',
+            //             repeat: 0,
+            //             yoyo: false,
+            //             onComplete: ()=>{
+            //                 this.resetTime(player1);
+            //                 this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+            //                 this.cambiarTurnos(player1, player2);
+            //                 this.btnDado.visible = false;
+            //                 this.textoEdit.visible = false;
+            //                 this.textoEdit.setText("");
+            //             }
+            //         })
         }
     }
     crearCasilla(casillaBody, grupo, casilla, callback) {
@@ -263,7 +373,7 @@ export default class Tablero extends Phaser.Scene {
 
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = false;
+        casillaBody.visible = true;
         this.physics.add.overlap(
             this.player1,
             casillaBody,
@@ -285,7 +395,27 @@ export default class Tablero extends Phaser.Scene {
             this
         );
     }
-    cronometro() {
+    tiempoCronometroPopUp(jugadorAnterior, jugadorProximo) {
+        this.tiempo -= 1;
+        this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+        if (this.tiempo <= 0) {
+            this.tiempo = this.initTiempo;
+            jugadorAnterior.anims.stop();
+            this.btnDado.visible = true;
+            jugadorProximo.anims.play(`${jugadorProximo.animacion}-idle`);
+            this.popUpContenedor.visible = false;
+            // this.isChangeTurn = false;
+            this.cronometro.reset({
+                delay: 1000,
+                callback: this.onCronometro,
+                callbackScope: this,
+                loop: true,
+                startAt: this.tiempo,
+                paused: false,
+            });
+        }
+    }
+    onCronometro() {
         this.tiempo -= 1;
         this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
         if (this.tiempo <= 0) {
@@ -325,37 +455,49 @@ export default class Tablero extends Phaser.Scene {
         4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
         5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
         */
-    //    console.log( casillaBody);
+        //    console.log( casillaBody);
         casillaBody.disableBody(true, true);
         this.casillaDescativadaOverlap = casillaBody;
 
         const numeroRandom = Phaser.Math.Between(1, 4);
-        switch (numeroRandom) {
+        switch (4) {
             case 1:
                 console.warn("Pierdes el turno");
-                this.textoEdit.setText("Pierdes el turno");
-                this.textoEdit.visible = true;
-                console.error(player.getName);
+                // this.textoEdit.setText("Pierdes el turno");
+                // this.textoEdit.visible = true;
+                this.popUpContenedorConsecuencias.visible = true;
+                this.textoConsecuencia.setText("Pierdes el turno");
                 player.setCanMove = false;
                 player.setCountTurn = 1;
+                setTimeout(() => {
+                    this.popUpContenedorConsecuencias.visible = false;
+                }, 2000);
                 break;
             case 2:
                 console.warn("Retrocede 4 casillas");
-                console.error(player.getName);
-                this.textoEdit.setText("Retrocede 4 casillas");
-                this.textoEdit.visible = true;
+                // console.error(player.getName);
+                this.popUpContenedorConsecuencias.visible = true;
+                this.textoConsecuencia.setText("Retrocede 4 casillas");
+                // this.textoEdit.setText("Retrocede 4 casillas");
+                // this.textoEdit.visible = true;
+                setTimeout(() => {
+                    this.popUpContenedorConsecuencias.visible = false;
+                }, 2000);
                 player.setIsTurn = false;
                 player.setCanThrowDice = false;
-                setTimeout(() => {
-                    this.retrocederCasillas(player, 4, null, this.posActual);
-                }, 3000);
+                this.retrocederCasillas(player, 4, null, this.posActual);
                 break;
 
             case 3:
                 console.warn("Retrocede 4 casillas al CONTRICANTE");
                 console.error(player.getName);
-                this.textoEdit.setText("Retrocede 4 casillas");
-                this.textoEdit.visible = true;
+                this.popUpContenedorConsecuencias.visible = true;
+                this.textoConsecuencia.setText(`   Tu contricante\nretrocede 4 casillas`);
+                // this.textoEdit.setText("Retrocede 4 casillas");
+                // this.textoEdit.visible = true;
+                setTimeout(() => {
+                    this.popUpContenedorConsecuencias.visible = false;
+                }, 2000);
                 player.setIsTurn = false;
                 player.setAfectarContricante = true;
                 let jugadorAfectado;
@@ -369,6 +511,7 @@ export default class Tablero extends Phaser.Scene {
                         );
                         setTimeout(() => {
                             this.posActual = jugadorAfectado.getPosJugador;
+                            
                             this.retrocederCasillas(
                                 jugadorAfectado,
                                 4,
@@ -382,13 +525,17 @@ export default class Tablero extends Phaser.Scene {
                 break;
             case 4:
                 console.warn("Yunque en la cabeza");
-                this.textoEdit.setText("Yunque en la cabezas");
-                this.textoEdit.visible = true;
-                console.error(player.getName);
+                this.textoConsecuencia.setY(5);
+                this.popUpContenedorConsecuencias.visible = true;
+                this.textoConsecuencia.setText(`Te cayo un yunque\n  en la cabeza.\n Vuelves a inicio.`);
+                // this.textoEdit.setText("Yunque en la cabezas");
+                // this.textoEdit.visible = true;
+                // console.error(player.getName);
                 setTimeout(() => {
+                    this.popUpContenedorConsecuencias.visible = false;
                     player.soloMover(1);
                     this.camara.shake(200);
-                }, 3000);
+                }, 2000);
                 break;
         }
     }

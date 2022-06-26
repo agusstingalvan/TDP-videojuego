@@ -37,7 +37,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.countTurn = 0;
         this.afectarContricante = false;
         // this.setScale(0.5)
-        this.anims.play(`${this.animacion}-idle`, true)
+        // this.anims.play(`${this.animacion}-idle`, false)
     }
 
     get getTimeTurn() {
@@ -129,11 +129,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             "casillas",
             (obj) => obj.name === this.posJugador.toString()
         );
-        this.setX(spawnPoint.x + Phaser.Math.Between(0, 34));
-        this.setY(spawnPoint.y - Phaser.Math.Between(0, 34));
+        this.setX(spawnPoint.x);
+        this.setY(spawnPoint.y);
 
         this.setIsTurn = false;
         this.setCanThrowDice = false;
+        
+        this.anims.playReverse(`${this.animacion}-move`, true).on('animationcomplete', ()=>{
+            this.anims.stop();
+             this.anims.play(`${this.animacion}-idle`)
+            })
     }
     tirarDado(isClick = false) {
         if (this.getCanThrowDice && this.getCanMove) {
