@@ -30,8 +30,6 @@ export default class Tablero extends Phaser.Scene {
     casillasLayer;
     casillasGroup;
     casillaDescativadaOverlap;
-    isChangeTurn;
-    isClickBtnDado;
 
     constructor() {
         super("Tablero");
@@ -50,8 +48,6 @@ export default class Tablero extends Phaser.Scene {
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
         this.initTiempo = 3;
-        this.isChangeTurn = false;
-        this.isClickBtnDado = false;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -103,12 +99,11 @@ export default class Tablero extends Phaser.Scene {
 
         this.player1.setIsTurn = true;
         this.players = { player1: this.player1, player2: this.player2 };
-        // this.player1.anims.play(`pato-bruja-idle`)
+
         this.groupCasillaConsecuencia = this.physics.add.group();
         this.casillasLayer.objects.forEach((casilla) => {
             switch (casilla.type) {
                 case "consecuencia":
-                    // this.physics.add.overlap(this.player1, casilla, (player, cas) => console.log(cas), null, this)
                     this.crearCasilla(
                         this.casillaInvisible,
                         this.groupCasillaConsecuencia,
@@ -127,7 +122,6 @@ export default class Tablero extends Phaser.Scene {
             .setInteractive({
                 useHandCursor: true,
             });
-        // this.btnDado.visible = false;
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
@@ -162,13 +156,8 @@ export default class Tablero extends Phaser.Scene {
             loop: true,
             startAt: this.tiempo,
         });
-        this.textoEdit = this.add.text(640, 384, "TEXTO", {
-            color: "black",
-            backgroundColor: "white",
-            padding: 10,
-        });
-        this.textoEdit.visible = false;
 
+//POPUPS!!
         this.basePopUp = this.add
             .image(0, 0, "popup_contenedor")
             .setOrigin(0.5);
@@ -211,17 +200,8 @@ export default class Tablero extends Phaser.Scene {
     resetTime(player) {
         player.setTimeTurn = this.initTiempo;
         this.tiempo = this.initTiempo;
-        // this.cronometro.reset({
-        //     delay: 1000,
-        //     callback: this.onCronometro,
-        //     callbackScope: this,
-        //     loop: true,
-        //     startAt: this.tiempo,
-        //     paused: false
-        // })
     }
     cambiarTurnos(player1, player2) {
-        // this.popUpContenedorConsecuencias.visible = false;
             this.btnDado.visible = false;
             this.tiempo = 5;
             this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
@@ -237,12 +217,6 @@ export default class Tablero extends Phaser.Scene {
             player2.setIsTurn = true;
             this.textName.setText(player2.getName);
             this.popUpContenedor.visible = true;
-
-        // player1.setIsTurn = false;
-        // player2.setIsTurn = true;
-        // this.btnDado.visible = true;
-        // this.tiempo = this.initTiempo;
-        // this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
     }
     pierdeTurno(player1, player2) {
         //Si el jugador1 pierde su turno, sigue jugando el jugador2.
@@ -252,7 +226,7 @@ export default class Tablero extends Phaser.Scene {
             player1.setCountTurn = 0;
             player1.setCanMove = true;
 
-            //Seteo la secuencia de quien sigue el turno
+            //Setteo la secuencia de quien sigue el turno
             this.cambiarTurnos(player1, player2);
             return;
         }
@@ -260,22 +234,16 @@ export default class Tablero extends Phaser.Scene {
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
         if (player1.getIsTurn && !player2.getIsTurn) {
             jugadorActual = player1;
+            //Si perdio el turno automaticamente con esta funcion, realiza un return y sigue el proximo jugador. Evitando que se ejecute el resto del bloque de este sistemaDeTurnos!
             this.pierdeTurno(jugadorActual, player2);
-            // this.textCronometro.setText(`Tiempo: ${this.player1.getTimeTurn}`);
-            // console.log(jugadorActual.getName)
-            
             this.textoTurnoNombre.setText(`${player1.getName}`);
+
             //Para que se pueda tirar el dado.
             jugadorActual.setCanThrowDice = true;
             player2.setCanThrowDice = false;
 
-            
-            // this.btnDado.visible = true;
-            // jugadorActual.anims.play(`${jugadorActual.animacion}-idle`, false);
-
             //Si el jugador da click, tira el dado.
             if (clickOnButton) {
-                this.isClickBtnDado = true;
                 this.btnDado.on("pointerdown", () => {
                     this.tweens.add({
                         targets: this.btnDado,
@@ -290,22 +258,14 @@ export default class Tablero extends Phaser.Scene {
                                 `${jugadorActual.animacion}-move`,
                                 true
                             );
-                            // this.btnDado.visible = false;
                         },
                         onComplete: () => {
-                            // jugadorActual.anims.playReverse(`${jugadorActual.animacion}-move`).on("animationstart", ()=>console.log('inico')).on("animationcomplete", ()=> {
-
-                            // })
-                            // jugadorActual.anims.playReverse(`${jugadorActual.animacion}-move`, true)
                             jugadorActual.tirarDado(clickOnButton);
-                            this.textoEdit.visible = false;
-                            this.textoEdit.setText("");
                             this.resetTime(player1);
                             this.textCronometro.setText(
                                 `Tiempo: ${this.tiempo}`
                             );
                             this.cronometro.paused = true;
-                            this.isChangeTurn = true;
                             this.cambiarTurnos(jugadorActual, player2);
                         },
                     });
@@ -314,7 +274,6 @@ export default class Tablero extends Phaser.Scene {
             }
 
             //Si no da click, se mueve uno.
-            this.isClickBtnDado = false;
             this.tweens.add({
                 targets: this.btnDado,
                 duration: 1000,
@@ -331,33 +290,12 @@ export default class Tablero extends Phaser.Scene {
                 },
                 onComplete: () => {
                     jugadorActual.tirarDado(clickOnButton);
-                    this.textoEdit.visible = false;
-                    this.textoEdit.setText("");
                     this.resetTime(player1);
                     this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
                     this.cronometro.paused = true;
-                    this.isChangeTurn = true;
                     this.cambiarTurnos(jugadorActual, player2);
                 },
             });
-            //Si no da click, se mueve uno.
-            // player1.tirarDado(clickOnButton);
-            //         this.tweens.add({
-            //             targets: this.btnDado,
-            //             duration: 1000,
-            //             rotation: 360,
-            //             ease: 'Power3',
-            //             repeat: 0,
-            //             yoyo: false,
-            //             onComplete: ()=>{
-            //                 this.resetTime(player1);
-            //                 this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
-            //                 this.cambiarTurnos(player1, player2);
-            //                 this.btnDado.visible = false;
-            //                 this.textoEdit.visible = false;
-            //                 this.textoEdit.setText("");
-            //             }
-            //         })
         }
     }
     crearCasilla(casillaBody, grupo, casilla, callback) {
@@ -368,8 +306,6 @@ export default class Tablero extends Phaser.Scene {
          4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
          5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
         */
-
-        //  console.log('Si se creo')
 
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
@@ -404,7 +340,6 @@ export default class Tablero extends Phaser.Scene {
             this.btnDado.visible = true;
             jugadorProximo.anims.play(`${jugadorProximo.animacion}-idle`);
             this.popUpContenedor.visible = false;
-            // this.isChangeTurn = false;
             this.cronometro.reset({
                 delay: 1000,
                 callback: this.onCronometro,
@@ -455,16 +390,13 @@ export default class Tablero extends Phaser.Scene {
         4: Cuando se activa el callback del overlap. la casilla se desactiva y cuando en una variable la casilla desactivada.
         5: La casilla desactivada. Se vuelve hacer visible cuando el jugador se mueve nuevamente
         */
-        //    console.log( casillaBody);
         casillaBody.disableBody(true, true);
         this.casillaDescativadaOverlap = casillaBody;
 
         const numeroRandom = Phaser.Math.Between(1, 4);
-        switch (4) {
+        switch (numeroRandom) {
             case 1:
                 console.warn("Pierdes el turno");
-                // this.textoEdit.setText("Pierdes el turno");
-                // this.textoEdit.visible = true;
                 this.popUpContenedorConsecuencias.visible = true;
                 this.textoConsecuencia.setText("Pierdes el turno");
                 player.setCanMove = false;
@@ -475,11 +407,9 @@ export default class Tablero extends Phaser.Scene {
                 break;
             case 2:
                 console.warn("Retrocede 4 casillas");
-                // console.error(player.getName);
                 this.popUpContenedorConsecuencias.visible = true;
                 this.textoConsecuencia.setText("Retrocede 4 casillas");
-                // this.textoEdit.setText("Retrocede 4 casillas");
-                // this.textoEdit.visible = true;
+
                 setTimeout(() => {
                     this.popUpContenedorConsecuencias.visible = false;
                 }, 2000);
@@ -493,8 +423,6 @@ export default class Tablero extends Phaser.Scene {
                 console.error(player.getName);
                 this.popUpContenedorConsecuencias.visible = true;
                 this.textoConsecuencia.setText(`   Tu contricante\nretrocede 4 casillas`);
-                // this.textoEdit.setText("Retrocede 4 casillas");
-                // this.textoEdit.visible = true;
                 setTimeout(() => {
                     this.popUpContenedorConsecuencias.visible = false;
                 }, 2000);
@@ -528,9 +456,6 @@ export default class Tablero extends Phaser.Scene {
                 this.textoConsecuencia.setY(5);
                 this.popUpContenedorConsecuencias.visible = true;
                 this.textoConsecuencia.setText(`Te cayo un yunque\n  en la cabeza.\n Vuelves a inicio.`);
-                // this.textoEdit.setText("Yunque en la cabezas");
-                // this.textoEdit.visible = true;
-                // console.error(player.getName);
                 setTimeout(() => {
                     this.popUpContenedorConsecuencias.visible = false;
                     player.soloMover(1);
