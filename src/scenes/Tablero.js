@@ -47,7 +47,7 @@ export default class Tablero extends Phaser.Scene {
 
         this.numeroDelDado = 0;
         this.posActual = this.posSalida;
-        this.initTiempo = 3;
+        this.initTiempo = 15;
     }
     create() {
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -196,6 +196,7 @@ export default class Tablero extends Phaser.Scene {
     }
     actualizarPos(id) {
         this.posAnterior = this.posActual;
+        this.posActual = parseInt(id);
     }
     resetTime(player) {
         player.setTimeTurn = this.initTiempo;
