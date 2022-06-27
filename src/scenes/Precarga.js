@@ -3,15 +3,16 @@ export default class Precarga extends Phaser.Scene {
         super("Precarga");
     }
     preload() {
-        this.load.image(
-            "bg_menu_inicio",
-            "public/assets/images/escenas/menu_inicio.png"
-        );
-        this.load.image(
-            "bg_seleccion_personajes",
-            "public/assets/images/escenas/seleccion_personajes.png"
-        );
-
+        // this.load.image(
+        //     "bg_menu_inicio",
+        //     "public/assets/images/escenas/menu_inicio.png"
+        // );
+        // this.load.image(
+        //     "bg_seleccion_personajes",
+        //     "public/assets/images/escenas/seleccion_personajes.png"
+        // );
+        this.load.atlas('atlas_backgrounds', 'public/assets/images/atlas/escenas/atlas_backgrounds.png', 'public/assets/images/atlas/escenas/atlas_backgrounds.json');
+        this.load.atlas('atlas_casillas', 'public/assets/images/atlas/casillas/atlas_casillas.png', 'public/assets/images/atlas/casillas/atlas_casillas.json');
         // this.load.image("duck", "public/assets/images/Duck.png");
         this.load.image("duckWhite", "public/assets/images/duck-white.png");
 
@@ -52,10 +53,15 @@ export default class Precarga extends Phaser.Scene {
         // this.load.image("pato-gorro-verde", "public/assets/images/personajes/pato-gorro-verde.png");
         // this.load.image("pato-galera", "public/assets/images/personajes/pato-galera.png");
 
+        // this.load.atlas(
+        //     "botones",
+        //     "public/assets/images/atlas/botones-rojos.png",
+        //     "public/assets/images/atlas/botones-rojos_atlas.json"
+        // );
         this.load.atlas(
             "botones",
-            "public/assets/images/atlas/botones-rojos.png",
-            "public/assets/images/atlas/botones-rojos_atlas.json"
+            "public/assets/images/atlas/botones/atlas_botones.png",
+            "public/assets/images/atlas/botones/atlas_botones.json"
         );
 
         // this.load.image("boton-jugar", "public/assets/images/botones/botones-rojos/boton-jugar.png");
@@ -82,22 +88,26 @@ export default class Precarga extends Phaser.Scene {
             "map_tablero",
             "public/assets/tilemaps/tablero.json"
         );
-        this.load.image(
-            "tiledBackground",
-            "public/assets/images/fondo-tablero.jpg"
-        );
-        this.load.image(
-            "tiledCasillas",
-            "public/assets/images/casillas-atlas.png"
-        );
+        // this.load.image(
+        //     "tiledBackground",
+        //     "public/assets/images/fondo-tablero.jpg"
+        // );
+        // this.load.image(
+        //     "tiledCasillas",
+        //     "public/assets/images/casillas-atlas.png"
+        // );
         // this.load.image("casillaVacia", 'public/assets/images/casillas/casilla-vacia.png');
         this.load.image(
             "casillaInvisible",
             "public/assets/images/casillas/casilla-invisible.png"
         );
+        this.load.image(
+            "cargandoEstatico",
+            "public/cargandoUltimo-19.png"
+        );
     }
     create() {
-        this.add.text(400, 300, "Cargando!...");
+        this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "cargandoEstatico");
 
         this.anims.create({
             key: "pato-bruja-idle",
@@ -142,7 +152,7 @@ export default class Precarga extends Phaser.Scene {
             frameRate: 15,
             repeat: 0,
         });
-      this.scene.start("Inicio")
+      setTimeout(()=>this.scene.start("Inicio"), 3000)
     }
     
 }

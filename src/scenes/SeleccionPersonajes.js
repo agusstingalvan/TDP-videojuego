@@ -37,7 +37,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         super("SeleccionPersonajes");
     }
     create() {
-        this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'bg_seleccion_personajes')
+        this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-seleccionPersonajes");
         for (let player in players) {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
@@ -50,7 +50,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             this.createInputs(nameText, playerObj);
         }
         
-        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45),'botones' , "boton-cerrar", () => this.scene.start("Inicio"));
+        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45),'botones' , "boton-cerrar", () => this.scene.start("Inicio"), 0.5);
         const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, 'botones',"boton-listo", () => this.scene.start("Tablero", { players }))
     }
 
@@ -98,7 +98,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             if (!isRight) return;
             //Verifico si la tecla es el boton de borrar, entonces borra el ultima letra
             if (e.key === 'Backspace') {
-                nameText.setColor("green");
+                nameText.setColor("white");
                 let string = stringName.charAt(0).toUpperCase() + stringName.slice(1);
                 stringName = string.slice(0, string.length - 1);
                 nameText.setText(stringName);
@@ -116,7 +116,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
                 }
                 return
             }
-            nameText.setColor("green");
+            nameText.setColor("white");
             stringName += e.key;
             let string = stringName.charAt(0).toUpperCase() + stringName.slice(1);
             nameText.setText(string);

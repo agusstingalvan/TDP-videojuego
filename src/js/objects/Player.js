@@ -118,11 +118,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     mover(dado = 1) {
         this.posJugador += dado;
-        if (this.posJugador > 45) {
+        if (this.posJugador > 43) {
             // this.numeroDelDado = 0;
             this.posJugador -= dado;
         }
-        if (this.posJugador === 45) {
+        if (this.posJugador === 43) {
             this.scene.scene.start("Ganador", this);
         }
         let spawnPoint = this.map.findObject(
@@ -135,10 +135,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setIsTurn = false;
         this.setCanThrowDice = false;
         
-        this.anims.playReverse(`${this.animacion}-move`, true).on('animationcomplete', ()=>{
-            this.anims.stop();
-             this.anims.play(`${this.animacion}-idle`)
-            })
+        this.anims.playReverse(`${this.animacion}-move`, true)
+        // .on('animationcomplete', ()=>{
+        //     this.anims.stop();
+        //      this.anims.play(`${this.animacion}-idle`)
+        //     })
     }
     tirarDado(isClick = false) {
         if (this.getCanThrowDice && this.getCanMove) {

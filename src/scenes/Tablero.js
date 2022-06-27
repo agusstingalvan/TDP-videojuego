@@ -20,8 +20,8 @@ export default class Tablero extends Phaser.Scene {
     textCronometro;
 
     map;
-    posSalida = 2;
-    posLlegada = 45;
+    posSalida = 1;
+    posLlegada = 43;
     posActual = this.posSalida;
     // casillaBody;
     casillaInvisible;
@@ -50,21 +50,24 @@ export default class Tablero extends Phaser.Scene {
         this.initTiempo = 15;
     }
     create() {
+        // this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-mapa");
+
         this.map = this.make.tilemap({ key: "map_tablero" });
         const tiledBackground = this.map.addTilesetImage(
             "fondo-tablero",
-            "tiledBackground"
+            "atlas_backgrounds"
         );
+        
         const tiledCasillas = this.map.addTilesetImage(
             "casillas-atlas",
-            "tiledCasillas"
+            "atlas_casillas"
         );
         const sky = this.map.createLayer("fondo", tiledBackground, 0, 0);
         const casillas = this.map.createLayer("casillas", tiledCasillas, 0, 0);
         const objectsLayers = this.map.getObjectLayer("objetos");
         this.casillasLayer = this.map.getObjectLayer("casillas");
 
-        casillas.setCollisionByProperty({ collides: true });
+        // casillas.setCollisionByProperty({ collides: true });
 
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
@@ -128,10 +131,12 @@ export default class Tablero extends Phaser.Scene {
             this.sys.game.config.height - (this.sys.game.config.height - 45),
             "botones",
             "boton-cerrar",
-            () => this.scene.start("Inicio")
+            () => this.scene.start("Inicio"),
+            0.5
         );
 
-        this.textName = this.add.text(200, 650, this.player1.name, {
+
+        this.textName = this.add.text(200, 700, this.player1.name, {
             color: "red",
             backgroundColor: "white",
             padding: 10,
@@ -254,7 +259,7 @@ export default class Tablero extends Phaser.Scene {
                         repeat: 0,
                         yoyo: false,
                         onStart: () => {
-                            jugadorActual.anims.stop();
+                            // jugadorActual.anims.stop();
                             jugadorActual.anims.play(
                                 `${jugadorActual.animacion}-move`,
                                 true
@@ -283,7 +288,7 @@ export default class Tablero extends Phaser.Scene {
                 repeat: 0,
                 yoyo: false,
                 onStart: () => {
-                    jugadorActual.anims.stop();
+                    // jugadorActual.anims.stop();
                     jugadorActual.anims.play(
                         `${jugadorActual.animacion}-move`,
                         true
@@ -310,7 +315,8 @@ export default class Tablero extends Phaser.Scene {
 
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = true;
+        casillaBody.visible = false;
+        casillaBody.setScale(0.5).refreshBody();
         this.physics.add.overlap(
             this.player1,
             casillaBody,
@@ -337,9 +343,9 @@ export default class Tablero extends Phaser.Scene {
         this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
         if (this.tiempo <= 0) {
             this.tiempo = this.initTiempo;
-            jugadorAnterior.anims.stop();
+            // jugadorAnterior.anims.stop();
             this.btnDado.visible = true;
-            jugadorProximo.anims.play(`${jugadorProximo.animacion}-idle`);
+            // jugadorProximo.anims.play(`${jugadorProximo.animacion}-idle`);
             this.popUpContenedor.visible = false;
             this.cronometro.reset({
                 delay: 1000,
