@@ -326,10 +326,10 @@ export default class Tablero extends Phaser.Scene {
                         `${jugadorActual.animacion}-move`,
                         true
                     );
-                },
-                onComplete: () => {
                     this.sonidos.sound.tirarDadoSFX.volume = 1;
                     this.sonidos.sound.tirarDadoSFX.play();
+                },
+                onComplete: () => {
                     jugadorActual.tirarDado(clickOnButton);
                     this.numeroDado.setText("1");
                     this.resetTime(player1);
