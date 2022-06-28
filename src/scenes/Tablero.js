@@ -196,10 +196,12 @@ export default class Tablero extends Phaser.Scene {
         this.textoTurno = this.add
             .text(0, 0 - 16, "Turno de:", { fontSize: 24, fontStyle: "bold", fontFamily: 'LSans' })
             .setOrigin(0.5);
+            this.textoTurno.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5)
         this.textoTurnoNombre = this.add
             .text(0, 0 + 16, "Jugador 1", { fontSize: 20, fontFamily: 'LSans'})
             .setOrigin(0.5);
-
+        this.textoTurno.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
+        this.textoTurnoNombre.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
         this.popUpContenedor = this.add.container(
             this.sys.game.config.width / 2,
             this.sys.game.config.height / 2,
@@ -214,6 +216,7 @@ export default class Tablero extends Phaser.Scene {
         this.textoConsecuencia = this.add
         .text(0, 0 + 16, "Consecuencia", { fontSize: 20, fontFamily: 'LSans'})
         .setOrigin(0.5);
+        this.textoConsecuencia.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
         this.popUpContenedorConsecuencias = this.add.container(
             this.sys.game.config.width / 2,
             this.sys.game.config.height / 2,
@@ -439,6 +442,7 @@ export default class Tablero extends Phaser.Scene {
             case 1:
                 console.warn("Pierdes el turno");
                 this.popUpContenedorConsecuencias.visible = true;
+                this.textoConsecuencia.setY(0)
                 this.textoConsecuencia.setText("Pierdes el turno");
                 player.setCanMove = false;
                 player.setCountTurn = 1;
