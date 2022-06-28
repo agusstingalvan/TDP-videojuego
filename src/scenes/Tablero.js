@@ -159,25 +159,7 @@ export default class Tablero extends Phaser.Scene {
         this.fotoReloj = this.add.image(this.cronometroPos.x, this.cronometroPos.y, 'reloj').setScale(1.3)
         this.textCronometro = new Text(this, this.cronometroPos.x, this.cronometroPos.y, this.player1.getTimeTurn, 20, null, 0.5, "black");
 
-        // this.add.container(this.sys.game.config.width / 2,
-        // 20, [this.fotoReloj, this.textCronometro])
-        // this.textName = this.add.text(200, 700, this.player1.name, {
-        //     color: "red",
-        //     backgroundColor: "white",
-        //     padding: 10,
-        //     fontStyle: "bold",
-        // });
-        // this.textCronometro = this.add.text(
-        //     this.sys.game.config.width / 2,
-        //     0,
-        //     `Tiempo: ${this.player1.getTimeTurn}`,
-        //     {
-        //         color: "red",
-        //         backgroundColor: "white",
-        //         padding: 10,
-        //         fontStyle: "bold",
-        //     }
-        // );
+
         this.tiempo = this.initTiempo;
         this.cronometro = this.time.addEvent({
             delay: 1000,
@@ -269,6 +251,7 @@ export default class Tablero extends Phaser.Scene {
     }
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
         if (player1.getIsTurn && !player2.getIsTurn) {
+            
             jugadorActual = player1;
             //Si perdio el turno automaticamente con esta funcion, realiza un return y sigue el proximo jugador. Evitando que se ejecute el resto del bloque de este sistemaDeTurnos!
             this.pierdeTurno(jugadorActual, player2);
@@ -351,7 +334,7 @@ export default class Tablero extends Phaser.Scene {
 
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = true;
+        casillaBody.visible = false;
         casillaBody.setScale(0.5).refreshBody();
         this.physics.add.overlap(
             this.player1,

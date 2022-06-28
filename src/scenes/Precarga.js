@@ -40,16 +40,16 @@ export default class Precarga extends Phaser.Scene {
             { frameWidth: 64, frameHeight: 64 }
         );
 
-        this.load.spritesheet(
-            "spritesheet-pato-bruja-idle",
-            "public/assets/images/spritesheet/spritesheet-pato-bruja-idle.png",
-            { frameWidth: 64, frameHeight: 64 }
-        );
-        this.load.spritesheet(
-            "spritesheet-pato-galera-idle",
-            "public/assets/images/spritesheet/spritesheet-pato-galera-idle.png",
-            { frameWidth: 64, frameHeight: 64 }
-        );
+        // this.load.spritesheet(
+        //     "spritesheet-pato-bruja-idle",
+        //     "public/assets/images/spritesheet/spritesheet-pato-bruja-idle.png",
+        //     { frameWidth: 64, frameHeight: 64 }
+        // );
+        // this.load.spritesheet(
+        //     "spritesheet-pato-galera-idle",
+        //     "public/assets/images/spritesheet/spritesheet-pato-galera-idle.png",
+        //     { frameWidth: 64, frameHeight: 64 }
+        // );
         // this.load.image("pato-gorro-bruja", "public/assets/images/personajes/pato-gorro-bruja.png");
         // this.load.image("pato-gorro-verde", "public/assets/images/personajes/pato-gorro-verde.png");
         // this.load.image("pato-galera", "public/assets/images/personajes/pato-galera.png");
@@ -117,7 +117,11 @@ export default class Precarga extends Phaser.Scene {
         this.load.audio('musicTablero', 'public/assets/sounds/music-tablero.mp3');
         this.load.audio('musicMain', 'public/assets/sounds/music-main-menu.mp3');
 
-        this.load.image('casilleroUI', 'public/assets/images/casillero-interfaz.png')
+        this.load.image('casilleroUI', 'public/assets/images/casillero-interfaz.png');
+        
+        this.load.image('popup-ayuda', 'public/assets/images/popups/popup-ayuda.png');
+        this.load.image('popup-opciones', 'public/assets/images/popups/popup-opciones.png');
+        this.load.image('popup-creditos', 'public/assets/images/popups/popup-creditos.png');
     }
     create() {
         this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "cargandoEstatico");

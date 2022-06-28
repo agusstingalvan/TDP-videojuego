@@ -141,12 +141,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setIsTurn = false;
         this.setCanThrowDice = false;
         this.sonidoMoverse.play();
-        // this.anims.playReverse(`${this.animacion}-move`, true)
-        // this.anims.play(`${this.animacion}-move`, true)
-        // .on('animationcomplete', ()=>{
-        //     this.anims.stop();
-        //      this.anims.play(`${this.animacion}-idle`)
-        //     })
     }
     tirarDado(isClick = false) {
         if (this.getCanThrowDice && this.getCanMove) {
