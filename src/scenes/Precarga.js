@@ -111,40 +111,47 @@ export default class Precarga extends Phaser.Scene {
             "cargandoEstatico",
             "public/cargandoUltimo-19.png"
         );
+        
+        this.load.audio('movimiento', 'public/assets/sounds/movimiento3.mp3');
+        this.load.audio('tirarDado', 'public/assets/sounds/sonido-dado.mp3');
+        this.load.audio('musicTablero', 'public/assets/sounds/music-tablero.mp3');
+        this.load.audio('musicMain', 'public/assets/sounds/music-main-menu.mp3');
+
+        this.load.image('casilleroUI', 'public/assets/images/casillero-interfaz.png')
     }
     create() {
         this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "cargandoEstatico");
 
-        this.anims.create({
-            key: "pato-bruja-idle",
-            frames: this.anims.generateFrameNumbers(
-                "spritesheet-pato-bruja-idle",
-                {
-                    start: 0,
-                    end: 3,
-                }
-            ),
-            frameRate: 4,
-            repeat: -1,
-        });
-        this.anims.create({
-            key: "pato-galera-idle",
-            frames: this.anims.generateFrameNumbers(
-                "spritesheet-pato-galera-idle",
-                {
-                    start: 0,
-                    end: 3,
-                }
-            ),
-            frameRate: 4,
-            repeat: -1,
-        });
+        // this.anims.create({
+        //     key: "pato-bruja-idle",
+        //     frames: this.anims.generateFrameNumbers(
+        //         "spritesheet-pato-bruja-idle",
+        //         {
+        //             start: 0,
+        //             end: 3,
+        //         }
+        //     ),
+        //     frameRate: 4,
+        //     repeat: -1,
+        // });
+        // this.anims.create({
+        //     key: "pato-galera-idle",
+        //     frames: this.anims.generateFrameNumbers(
+        //         "spritesheet-pato-galera-idle",
+        //         {
+        //             start: 0,
+        //             end: 3,
+        //         }
+        //     ),
+        //     frameRate: 4,
+        //     repeat: -1,
+        // });
 
         this.anims.create({
             key: "pato-bruja-move",
             frames: this.anims.generateFrameNumbers("spritesheet-pato-bruja", {
                 start: 0,
-                end: 14,
+                end: 29,
             }),
             frameRate: 15,
             repeat: 0,
@@ -153,11 +160,21 @@ export default class Precarga extends Phaser.Scene {
             key: "pato-galera-move",
             frames: this.anims.generateFrameNumbers("spritesheet-pato-galera", {
                 start: 0,
-                end: 12,
+                end: 25,
             }),
             frameRate: 15,
             repeat: 0,
         });
+        // this.anims.create({
+        //     key: "cargando",
+        //     frames: this.anims.generateFrameNumbers("animacionCargando", {
+        //         start: 0,
+        //         end: 19,
+        //     }),
+        //     frameRate: 9,
+        //     repeat: 0,
+        // });
+        // this.anims.play("cargando")
       setTimeout(()=>this.scene.start("Inicio"), 1000)
     }
     

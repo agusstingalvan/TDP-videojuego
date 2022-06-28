@@ -1,4 +1,5 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+    numeroDelDado;
     constructor(
         scene,
         x,
@@ -9,7 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         color,
         timeTurn = 15,
         map,
-        posJugador
+        posJugador, sonido
     ) {
         super(scene, x, y, texture, frame);
         this.scene = scene;
@@ -38,6 +39,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.afectarContricante = false;
         // this.setScale(0.5)
         // this.anims.play(`${this.animacion}-idle`, false)
+        this.sonidoMoverse = sonido;
+        this.numeroDelDado = 0;
     }
 
     get getTimeTurn() {
@@ -116,6 +119,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     set setAfectarContricante(bool){
         this.afectarContricante = bool;
     }
+    get getNumeroDelDado(){
+        return this.numeroDelDado;
+    }
     mover(dado = 1) {
         this.posJugador += dado;
         if (this.posJugador > 43) {
@@ -134,8 +140,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setIsTurn = false;
         this.setCanThrowDice = false;
-        
-        this.anims.playReverse(`${this.animacion}-move`, true)
+        this.sonidoMoverse.play();
+        // this.anims.playReverse(`${this.animacion}-move`, true)
+        // this.anims.play(`${this.animacion}-move`, true)
         // .on('animationcomplete', ()=>{
         //     this.anims.stop();
         //      this.anims.play(`${this.animacion}-idle`)
@@ -144,10 +151,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     tirarDado(isClick = false) {
         if (this.getCanThrowDice && this.getCanMove) {
             if (isClick) {
-                let numeroDelDado = Phaser.Math.Between(1, 6);
-                this.mover(numeroDelDado)
+                // let numeroDelDado = Phaser.Math.Between(1, 6);
+                this.numeroDelDado = Phaser.Math.Between(1, 6)
+                this.mover(this.numeroDelDado)
                 // this.setTimeTurn = this.timeTurn;
             } else {
+                this.numeroDelDado = 1;
                 this.mover(1);
                 // this.setTimeTurn = this.timeTurn;
             }

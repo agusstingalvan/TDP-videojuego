@@ -38,7 +38,7 @@ export default class Tablero extends Phaser.Scene {
     init(data) {
         //Inicializacion
         this.players = data.players;
-
+        this.sonidos = data.sonidos;
         this.player1 = this.players.player1;
         this.player2 = this.players.player2;
         // this.player3 = this.players.player3;
@@ -52,7 +52,8 @@ export default class Tablero extends Phaser.Scene {
     }
     create() {
         // this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-mapa");
-
+        this.sonidos.sound.musicTablero.config.volume = 0.1;
+        this.sonidos.sound.musicTablero.play();
         this.map = this.make.tilemap({ key: "map_tablero" });
         const tiledBackground = this.map.addTilesetImage(
             "fondo-tablero",
@@ -67,7 +68,7 @@ export default class Tablero extends Phaser.Scene {
         const casillas = this.map.createLayer("casillas", tiledCasillas, 0, 0);
         const objectsLayers = this.map.getObjectLayer("objetos");
         this.casillasLayer = this.map.getObjectLayer("casillas");
-
+            
         // casillas.setCollisionByProperty({ collides: true });
 
         const salida = this.casillasLayer.objects.find(
@@ -86,7 +87,8 @@ export default class Tablero extends Phaser.Scene {
             this.player1.color,
             this.initTiempo,
             this.map,
-            this.posActual
+            this.posActual,
+            this.sonidos.sound.movimientoDadoSFX
         );
         this.player2 = new Player(
             this,
@@ -98,7 +100,8 @@ export default class Tablero extends Phaser.Scene {
             this.player2.color,
             this.initTiempo,
             this.map,
-            this.posActual
+            this.posActual, 
+            this.sonidos.sound.movimientoDadoSFX
         );
 
         this.player1.setIsTurn = true;
@@ -118,9 +121,22 @@ export default class Tablero extends Phaser.Scene {
             }
         });
 
+        
+        
+        this.casilleroUIPosition = objectsLayers.objects.find(
+            (obj) => obj.name === "casilleroInterfaz"
+        );
+        this.casilleroUIPosition = this.add.image(this.casilleroUIPosition.x, this.casilleroUIPosition.y,'casilleroUI');
         this.dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
         );
+        this.cronometroPos = objectsLayers.objects.find(
+            (obj) => obj.name === "cronometro"
+        );
+        this.nombreJugadorPos = objectsLayers.objects.find(
+            (obj) => obj.name === "nombreJugador"
+        );
+        this.numeroDado =  new Text(this, this.dadoPosition.x,  this.dadoPosition.y, "1", 30, 'bold', 0.5, "black");
         this.btnDado = this.add
             .image(this.dadoPosition.x, this.dadoPosition.y, "boton-dado")
             .setInteractive({
@@ -132,15 +148,16 @@ export default class Tablero extends Phaser.Scene {
             this.sys.game.config.height - (this.sys.game.config.height - 45),
             "botones",
             "boton-cerrar",
-            () => this.scene.start("Inicio"),
+            () => {
+                this.sonidos.sound.musicTablero.stop();
+                this.scene.start("Inicio");
+            },
             0.5
         );
-
-        this.textName = new Text(this, 200, 700, this.player1.name);
-        this.fotoReloj = this.add.image(this.sys.game.config.width / 2,
-        40, 'reloj').setScale(1.5)
-        this.textCronometro = new Text(this, this.sys.game.config.width / 2,
-        40, this.player1.getTimeTurn, 20, null, 0.5, "black");
+        
+        this.textName = new Text(this, this.nombreJugadorPos.x, this.nombreJugadorPos.y, this.player1.name, 20, 'bold', 0.5, "white");
+        this.fotoReloj = this.add.image(this.cronometroPos.x, this.cronometroPos.y, 'reloj').setScale(1.3)
+        this.textCronometro = new Text(this, this.cronometroPos.x, this.cronometroPos.y, this.player1.getTimeTurn, 20, null, 0.5, "black");
 
         // this.add.container(this.sys.game.config.width / 2,
         // 20, [this.fotoReloj, this.textCronometro])
@@ -268,19 +285,24 @@ export default class Tablero extends Phaser.Scene {
                         ease: "Power3",
                         repeat: 0,
                         yoyo: false,
-                        onStart: () => {
-                            // jugadorActual.anims.stop();
+                        onStart: () => {    
                             jugadorActual.anims.play(
                                 `${jugadorActual.animacion}-move`,
                                 true
-                            );
+                            );   
+                            this.numeroDado.visible = true;        
                         },
                         onComplete: () => {
+                            
+                            this.sonidos.sound.tirarDadoSFX.volume = 1;
+                            this.sonidos.sound.tirarDadoSFX.play();
                             jugadorActual.tirarDado(clickOnButton);
+                            this.numeroDado.setText(jugadorActual.getNumeroDelDado);
                             this.resetTime(player1);
                             this.textCronometro.setText(this.tiempo);
                             this.cronometro.paused = true;
                             this.cambiarTurnos(jugadorActual, player2);
+                            this.btnDado.setRotation(0);
                         },
                     });
                 });
@@ -303,11 +325,15 @@ export default class Tablero extends Phaser.Scene {
                     );
                 },
                 onComplete: () => {
+                    this.sonidos.sound.tirarDadoSFX.volume = 1;
+                    this.sonidos.sound.tirarDadoSFX.play();
                     jugadorActual.tirarDado(clickOnButton);
+                    this.numeroDado.setText("1");
                     this.resetTime(player1);
                     this.textCronometro.setText(this.tiempo);
                     this.cronometro.paused = true;
                     this.cambiarTurnos(jugadorActual, player2);
+                    this.btnDado.setRotation(0);
                 },
             });
         }
@@ -323,7 +349,7 @@ export default class Tablero extends Phaser.Scene {
 
         casillaBody = grupo.create(casilla.x, casilla.y, "casillaInvisible");
         casillaBody.body.allowGravity = false;
-        casillaBody.visible = false;
+        casillaBody.visible = true;
         casillaBody.setScale(0.5).refreshBody();
         this.physics.add.overlap(
             this.player1,

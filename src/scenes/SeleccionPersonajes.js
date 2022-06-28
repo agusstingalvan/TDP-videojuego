@@ -21,11 +21,12 @@ export default class SeleccionPersonajes extends Phaser.Scene {
     constructor() {
         super("SeleccionPersonajes");
     }
-    init(){
+    init(data){
         canEdit = true
         stringName = ""
         players.player1.name = 'Jugador 1';
         players.player2.name = 'Jugador 2';
+        this.sonidos = data.sonidos;
     }
     create() {
         this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-seleccionPersonajes");
@@ -46,9 +47,16 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             
             this.createInputs(nameText, playerObj);
         }
+        const sonidos = this.sonidos;
+        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45),'botones' , "boton-cerrar", () => {
+            this.sonidos.sound.musicMain.stop();
+            this.scene.start("Inicio")
+        }, 0.5);
         
-        const btnCerrar = new Button(this, this.sys.game.config.width - 45, this.sys.game.config.height - (this.sys.game.config.height - 45),'botones' , "boton-cerrar", () => this.scene.start("Inicio"), 0.5);
-        const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, 'botones',"boton-listo", () => this.scene.start("Tablero", { players }))
+        const btnListo = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height - 100, 'botones',"boton-listo", () => {
+            this.scene.start("Tablero", { players, sonidos})
+            this.sonidos.sound.musicMain.stop()
+        });  
     }
 
     createInputs(nameText, playerObj) {
