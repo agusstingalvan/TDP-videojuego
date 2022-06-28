@@ -124,11 +124,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     mover(dado = 1) {
         this.posJugador += dado;
-        if (this.posJugador > 43) {
+        if (this.posJugador > 42) {
             // this.numeroDelDado = 0;
             this.posJugador -= dado;
         }
-        if (this.posJugador === 43) {
+        if (this.posJugador === 42) {
             this.scene.scene.start("Ganador", this);
         }
         let spawnPoint = this.map.findObject(

@@ -22,7 +22,7 @@ export default class Tablero extends Phaser.Scene {
 
     map;
     posSalida = 1;
-    posLlegada = 43;
+    posLlegada = 42;
     posActual = this.posSalida;
     // casillaBody;
     casillaInvisible;
@@ -293,12 +293,11 @@ export default class Tablero extends Phaser.Scene {
                                 `${jugadorActual.animacion}-move`,
                                 true
                             );   
-                            this.numeroDado.visible = true;        
+                            this.numeroDado.visible = true;  
+                            this.sonidos.sound.tirarDadoSFX.volume = 1;
+                            this.sonidos.sound.tirarDadoSFX.play();      
                         },
                         onComplete: () => {
-                            
-                            this.sonidos.sound.tirarDadoSFX.volume = 1;
-                            this.sonidos.sound.tirarDadoSFX.play();
                             jugadorActual.tirarDado(clickOnButton);
                             this.numeroDado.setText(jugadorActual.getNumeroDelDado);
                             this.resetTime(player1);

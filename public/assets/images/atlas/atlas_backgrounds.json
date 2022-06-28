@@ -1,33 +1,9 @@
 {
   "frames": {
-    "fondo-ganador": {
-      "frame": {
-        "x": 0,
-        "y": 0,
-        "w": 1280,
-        "h": 768
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 1280,
-        "h": 768
-      },
-      "sourceSize": {
-        "w": 1280,
-        "h": 768
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "fondo-mapa": {
       "frame": {
         "x": 0,
-        "y": 768,
+        "y": 0,
         "w": 1280,
         "h": 768
       },
@@ -51,7 +27,7 @@
     "fondo-seleccionPersonajes": {
       "frame": {
         "x": 0,
-        "y": 1536,
+        "y": 768,
         "w": 1280,
         "h": 768
       },
@@ -75,7 +51,7 @@
     "menu-inicio": {
       "frame": {
         "x": 0,
-        "y": 2304,
+        "y": 1536,
         "w": 1280,
         "h": 768
       },
@@ -100,11 +76,11 @@
   "meta": {
     "app": "http://free-tex-packer.com",
     "version": "0.6.7",
-    "image": "atlas_botones_amarrillos.png",
+    "image": "atlas_backgrounds.png",
     "format": "RGBA8888",
     "size": {
       "w": 1280,
-      "h": 3072
+      "h": 2304
     },
     "scale": 1
   }
