@@ -1,4 +1,5 @@
 import Button from "../js/functions/Button.js";
+import Text from "../js/functions/Text.js";
 
 let stringName = "";
 let canEdit = true;
@@ -7,45 +8,41 @@ let players = {
         name: "Jugador 1",
         x: 525,
         y: 300,
-        // color: "0xedd500",
         texture: "pato-bruja",
     },
     player2: {
         name: "Jugador 2",
         x: 725,
         y: 300,
-        // color: "0xa8323a",
         texture: "pato-galera",
     },
-    // player3: {
-    //     name: "Jugador 3",
-    //     x: 500,
-    //     y: 300,
-    //     color: "0xedd500",
-    //     texture: "duckWhite",
-    // },
-    // player4: {
-    //     name: "Jugador 4",
-    //     x: 675,
-    //     y: 300,
-    //     color: "0x000ced","0x32a852"
-    //     texture: "duckWhite",
-    // },
 };
 export default class SeleccionPersonajes extends Phaser.Scene {
     constructor() {
         super("SeleccionPersonajes");
+    }
+    init(){
+        canEdit = true
+        stringName = ""
+        players.player1.name = 'Jugador 1';
+        players.player2.name = 'Jugador 2';
     }
     create() {
         this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-seleccionPersonajes");
         for (let player in players) {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
-            this.add.rectangle(x, y + 5, 84, 84, '0x0B4551')
-            this.data = this.add.sprite(x, y, 'atlas_patos_static', texture, {frameWidth: 64, frameHeight: 64} ).setTint(color);
+            // this.add.rectangle(x, y, 100, 300, '0x32425');
+            this.add.rectangle(x + 20, y + 5, 84, 84, '0x0B4551')
+            this.data = this.add.sprite(x + 20, y, 'atlas_patos_static', texture, {frameWidth: 64, frameHeight: 64} ).setTint(color);
+            
+            // this.add.rectangle(x - 20, y + 70, 130, 30, '0xc1c1')
             let nameText = this.add.text(x, y + 70, name, {
-                fontStyle: 'bold'
+                fontFamily: 'Lsans',
+                fontSize: 18,
             }).setOrigin(0.5);
+            // this.add.container(0, 0, [this.data, nameText] )
+            // let nameText = new Text(this, x, y + 70, name, 24, 'bold', 0.5);
             
             this.createInputs(nameText, playerObj);
         }
@@ -73,6 +70,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             // playerObj.name = "";
             nameText.setText("Escriba...");
             nameText.setColor("red");
+            // nameText.setStyle('bold');
             stringName = "";
             window.addEventListener("keydown", writeName);
             btnEdit.visible = false;
@@ -83,6 +81,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             btnEdit.visible = true;
             btnReady.visible = false;
             nameText.setColor("white");
+            // nameText.setStyle('');
             window.removeEventListener("keydown", writeName);
             if (nameText.text === "Escriba...") {
                 nameText.setText(playerObj.name);

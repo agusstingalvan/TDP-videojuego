@@ -1,0 +1,183 @@
+{
+  "frames": {
+    "boton-ayuda": {
+      "frame": {
+        "x": 4,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-creditos": {
+      "frame": {
+        "x": 164,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-jugar": {
+      "frame": {
+        "x": 324,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-listo": {
+      "frame": {
+        "x": 484,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-opciones": {
+      "frame": {
+        "x": 644,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-volver": {
+      "frame": {
+        "x": 804,
+        "y": 4,
+        "w": 152,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 2,
+        "w": 152,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "boton-cerrar": {
+      "frame": {
+        "x": 964,
+        "y": 4,
+        "w": 54,
+        "h": 57
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 50,
+        "y": 2,
+        "w": 54,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 154,
+        "h": 63
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "atlas_botones_amarrillos.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1022,
+      "h": 65
+    },
+    "scale": 1
+  }
+}

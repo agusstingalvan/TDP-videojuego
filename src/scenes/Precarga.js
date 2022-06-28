@@ -27,6 +27,7 @@ export default class Precarga extends Phaser.Scene {
             "public/assets/images/atlas/atlas_patos_spritesheet.json"
         );
         this.load.image('popup_contenedor', 'public/assets/images/popups/popup_contenedor.png');
+        this.load.image('reloj', 'public/assets/images/reloj.png');
         // this.load.sprite('pato-bruja-spritesheet', '/pato-bruja', {frameWidth: 64, frameHeight: 64})
         this.load.spritesheet(
             "spritesheet-pato-bruja",
@@ -58,10 +59,15 @@ export default class Precarga extends Phaser.Scene {
         //     "public/assets/images/atlas/botones-rojos.png",
         //     "public/assets/images/atlas/botones-rojos_atlas.json"
         // );
-        this.load.atlas(
+        // this.load.atlas(
+        //     "botones",
+        //     "public/assets/images/atlas/botones/atlas_botones.png",
+        //     "public/assets/images/atlas/botones/atlas_botones.json"
+        // );
+         this.load.atlas(
             "botones",
-            "public/assets/images/atlas/botones/atlas_botones.png",
-            "public/assets/images/atlas/botones/atlas_botones.json"
+            "public/assets/images/atlas/botones/atlas_botones_amarrillos.png",
+            "public/assets/images/atlas/botones/atlas_botones_amarrillos.json"
         );
 
         // this.load.image("boton-jugar", "public/assets/images/botones/botones-rojos/boton-jugar.png");
@@ -152,7 +158,7 @@ export default class Precarga extends Phaser.Scene {
             frameRate: 15,
             repeat: 0,
         });
-      setTimeout(()=>this.scene.start("Inicio"), 3000)
+      setTimeout(()=>this.scene.start("Inicio"), 1000)
     }
     
 }

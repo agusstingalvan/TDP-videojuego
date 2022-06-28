@@ -1,4 +1,5 @@
 import Button from "../js/functions/Button.js";
+import Text from "../js/functions/Text.js";
 import Player from "../js/objects/Player.js";
 
 // let numeroDelDado, players, player1, player2, player3, player4, textDinero;
@@ -72,8 +73,8 @@ export default class Tablero extends Phaser.Scene {
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
         );
+        // const meta = casillasLayer.objects.find((obj) => obj.name === "43");
         this.camara = this.cameras.main;
-        // const meta = casillasLayer.objects.find((obj) => obj.name === "45");
 
         this.player1 = new Player(
             this,
@@ -135,24 +136,31 @@ export default class Tablero extends Phaser.Scene {
             0.5
         );
 
+        this.textName = new Text(this, 200, 700, this.player1.name);
+        this.fotoReloj = this.add.image(this.sys.game.config.width / 2,
+        40, 'reloj').setScale(1.5)
+        this.textCronometro = new Text(this, this.sys.game.config.width / 2,
+        40, this.player1.getTimeTurn, 20, null, 0.5, "black");
 
-        this.textName = this.add.text(200, 700, this.player1.name, {
-            color: "red",
-            backgroundColor: "white",
-            padding: 10,
-            fontStyle: "bold",
-        });
-        this.textCronometro = this.add.text(
-            this.sys.game.config.width / 2,
-            0,
-            `Tiempo: ${this.player1.getTimeTurn}`,
-            {
-                color: "red",
-                backgroundColor: "white",
-                padding: 10,
-                fontStyle: "bold",
-            }
-        );
+        // this.add.container(this.sys.game.config.width / 2,
+        // 20, [this.fotoReloj, this.textCronometro])
+        // this.textName = this.add.text(200, 700, this.player1.name, {
+        //     color: "red",
+        //     backgroundColor: "white",
+        //     padding: 10,
+        //     fontStyle: "bold",
+        // });
+        // this.textCronometro = this.add.text(
+        //     this.sys.game.config.width / 2,
+        //     0,
+        //     `Tiempo: ${this.player1.getTimeTurn}`,
+        //     {
+        //         color: "red",
+        //         backgroundColor: "white",
+        //         padding: 10,
+        //         fontStyle: "bold",
+        //     }
+        // );
         this.tiempo = this.initTiempo;
         this.cronometro = this.time.addEvent({
             delay: 1000,
@@ -166,11 +174,13 @@ export default class Tablero extends Phaser.Scene {
         this.basePopUp = this.add
             .image(0, 0, "popup_contenedor")
             .setOrigin(0.5);
+
+
         this.textoTurno = this.add
-            .text(0, 0 - 16, "Turno de:", { fontSize: 24, fontStyle: "bold" })
+            .text(0, 0 - 16, "Turno de:", { fontSize: 24, fontStyle: "bold", fontFamily: 'LSans' })
             .setOrigin(0.5);
         this.textoTurnoNombre = this.add
-            .text(0, 0 + 16, "Jugador 1", { fontSize: 20 })
+            .text(0, 0 + 16, "Jugador 1", { fontSize: 20, fontFamily: 'LSans'})
             .setOrigin(0.5);
 
         this.popUpContenedor = this.add.container(
@@ -185,7 +195,7 @@ export default class Tablero extends Phaser.Scene {
             .image(0, 0, "popup_contenedor")
             .setOrigin(0.5)
         this.textoConsecuencia = this.add
-        .text(0, 0 + 16, "Consecuencia", { fontSize: 20 })
+        .text(0, 0 + 16, "Consecuencia", { fontSize: 20, fontFamily: 'LSans'})
         .setOrigin(0.5);
         this.popUpContenedorConsecuencias = this.add.container(
             this.sys.game.config.width / 2,
@@ -210,7 +220,7 @@ export default class Tablero extends Phaser.Scene {
     cambiarTurnos(player1, player2) {
             this.btnDado.visible = false;
             this.tiempo = 5;
-            this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+            this.textCronometro.setText(this.tiempo);
             this.cronometro.reset({
                 delay: 1000,
                 callback: () => this.tiempoCronometroPopUp(player1, player2),
@@ -268,9 +278,7 @@ export default class Tablero extends Phaser.Scene {
                         onComplete: () => {
                             jugadorActual.tirarDado(clickOnButton);
                             this.resetTime(player1);
-                            this.textCronometro.setText(
-                                `Tiempo: ${this.tiempo}`
-                            );
+                            this.textCronometro.setText(this.tiempo);
                             this.cronometro.paused = true;
                             this.cambiarTurnos(jugadorActual, player2);
                         },
@@ -297,7 +305,7 @@ export default class Tablero extends Phaser.Scene {
                 onComplete: () => {
                     jugadorActual.tirarDado(clickOnButton);
                     this.resetTime(player1);
-                    this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+                    this.textCronometro.setText(this.tiempo);
                     this.cronometro.paused = true;
                     this.cambiarTurnos(jugadorActual, player2);
                 },
@@ -340,7 +348,7 @@ export default class Tablero extends Phaser.Scene {
     }
     tiempoCronometroPopUp(jugadorAnterior, jugadorProximo) {
         this.tiempo -= 1;
-        this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+        this.textCronometro.setText(this.tiempo);
         if (this.tiempo <= 0) {
             this.tiempo = this.initTiempo;
             // jugadorAnterior.anims.stop();
@@ -359,7 +367,7 @@ export default class Tablero extends Phaser.Scene {
     }
     onCronometro() {
         this.tiempo -= 1;
-        this.textCronometro.setText(`Tiempo: ${this.tiempo}`);
+        this.textCronometro.setText(this.tiempo);
         if (this.tiempo <= 0) {
             let jugadorAct, jugadorCambio;
             for (let player in this.players) {
