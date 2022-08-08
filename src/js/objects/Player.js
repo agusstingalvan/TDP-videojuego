@@ -34,10 +34,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.posJugador = posJugador;
         this.map = map;
-        // this.nextTurn = false;
         this.countTurn = 0;
         this.afectarContricante = false;
-        // this.setScale(0.5)
         // this.anims.play(`${this.animacion}-idle`, false)
         this.sonidoMoverse = sonido;
         this.numeroDelDado = 0;
@@ -95,37 +93,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     set setIsTurn(bool) {
         this.isTurn = bool;
     }
-    get getPosJugador(){
+    get getPosJugador() {
         return this.posJugador;
     }
-    set setPosJugador(num){
+    set setPosJugador(num) {
         this.posJugador = num;
     }
-    // get getNextTurn() {
-    //     return  this.nextTurn;
-    // }
-    // set setNextTurn(bool){
-    //     this.nextTurn = bool;
-    // }
-    get getCountTurn(){
+    get getCountTurn() {
         return this.countTurn;
     }
-    set setCountTurn(num = 1){
+    set setCountTurn(num = 1) {
         this.countTurn += num;
     }
-    get getAfectarContricante(){
+    get getAfectarContricante() {
         return this.afectarContricante;
     }
-    set setAfectarContricante(bool){
+    set setAfectarContricante(bool) {
         this.afectarContricante = bool;
     }
-    get getNumeroDelDado(){
+    get getNumeroDelDado() {
         return this.numeroDelDado;
     }
     mover(dado = 1) {
         this.posJugador += dado;
         if (this.posJugador > 42) {
-            // this.numeroDelDado = 0;
             this.posJugador -= dado;
         }
         if (this.posJugador === 42) {
@@ -145,16 +136,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     tirarDado(isClick = false) {
         if (this.getCanThrowDice && this.getCanMove) {
             if (isClick) {
-                // let numeroDelDado = Phaser.Math.Between(1, 6);
                 this.numeroDelDado = Phaser.Math.Between(1, 6)
                 this.mover(this.numeroDelDado)
-                // this.setTimeTurn = this.timeTurn;
             } else {
                 this.numeroDelDado = 1;
                 this.mover(1);
-                // this.setTimeTurn = this.timeTurn;
             }
-            
+
         }
     }
     soloMover(pos) {

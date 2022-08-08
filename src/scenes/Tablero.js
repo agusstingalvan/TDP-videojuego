@@ -2,10 +2,6 @@ import Button from "../js/functions/Button.js";
 import Text from "../js/functions/Text.js";
 import Player from "../js/objects/Player.js";
 
-// let numeroDelDado, players, player1, player2, player3, player4, textDinero;
-// let casillaBody;
-// let posActual;
-// let casillasLayer, map, casillasGroup
 let jugadorActual;
 let jugadorProximo;
 export default class Tablero extends Phaser.Scene {
@@ -25,7 +21,6 @@ export default class Tablero extends Phaser.Scene {
     posSalida = 1;
     posLlegada = 42;
     posActual = this.posSalida;
-    // casillaBody;
     casillaInvisible;
     casillaId;
     groupCasillaConsecuencia;
@@ -37,13 +32,10 @@ export default class Tablero extends Phaser.Scene {
         super("Tablero");
     }
     init(data) {
-        //Inicializacion
         this.players = data.players;
         this.sonidos = data.sonidos;
         this.player1 = this.players.player1;
         this.player2 = this.players.player2;
-        // this.player3 = this.players.player3;
-        // this.player4 = this.players.player4;
         this.player1.setAfectarContricante = false;
         this.player2.setAfectarContricante = false;
 
@@ -52,7 +44,6 @@ export default class Tablero extends Phaser.Scene {
         this.initTiempo = 15;
     }
     create() {
-        // this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds',"fondo-mapa");
         this.sonidos.sound.musicTablero.config.volume = 0.1;
         this.sonidos.sound.musicTablero.play();
         this.map = this.make.tilemap({ key: "map_tablero" });
@@ -60,7 +51,7 @@ export default class Tablero extends Phaser.Scene {
             "fondo-tablero",
             "atlas_backgrounds"
         );
-        
+
         const tiledCasillas = this.map.addTilesetImage(
             "casillas-atlas",
             "atlas_casillas"
@@ -69,13 +60,11 @@ export default class Tablero extends Phaser.Scene {
         const casillas = this.map.createLayer("casillas", tiledCasillas, 0, 0);
         const objectsLayers = this.map.getObjectLayer("objetos");
         this.casillasLayer = this.map.getObjectLayer("casillas");
-            
-        // casillas.setCollisionByProperty({ collides: true });
+
 
         const salida = this.casillasLayer.objects.find(
             (obj) => obj.name === this.posSalida.toString()
         );
-        // const meta = casillasLayer.objects.find((obj) => obj.name === "43");
         this.camara = this.cameras.main;
 
         this.player1 = new Player(
@@ -101,7 +90,7 @@ export default class Tablero extends Phaser.Scene {
             this.player2.color,
             this.initTiempo,
             this.map,
-            this.posActual, 
+            this.posActual,
             this.sonidos.sound.movimientoDadoSFX
         );
 
@@ -122,12 +111,12 @@ export default class Tablero extends Phaser.Scene {
             }
         });
 
-        
-        
+
+
         this.casilleroUIPosition = objectsLayers.objects.find(
             (obj) => obj.name === "casilleroInterfaz"
         );
-        this.casilleroUIPosition = this.add.image(this.casilleroUIPosition.x, this.casilleroUIPosition.y,'casilleroUI');
+        this.casilleroUIPosition = this.add.image(this.casilleroUIPosition.x, this.casilleroUIPosition.y, 'casilleroUI');
         this.dadoPosition = objectsLayers.objects.find(
             (obj) => obj.name === "dado"
         );
@@ -137,41 +126,44 @@ export default class Tablero extends Phaser.Scene {
         this.nombreJugadorPos = objectsLayers.objects.find(
             (obj) => obj.name === "nombreJugador"
         );
-        this.numeroDado =  new Text(this, this.dadoPosition.x,  this.dadoPosition.y, "1", 30, 'bold', 0.5, "black");
+        this.numeroDado = new Text(this, this.dadoPosition.x, this.dadoPosition.y, "1", 30, 'bold', 0.5, "black");
         this.btnDado = this.add
             .image(this.dadoPosition.x, this.dadoPosition.y, "boton-dado")
             .setInteractive({
                 useHandCursor: true,
             });
-            this.btnDado.on("pointerdown", () => {
-                this.tweens.add({
-                    targets: this.btnDado,
-                    duration: 1000,
-                    rotation: 360,
-                    ease: "Power3",
-                    repeat: 0,
-                    yoyo: false,
-                    onStart: () => {    
-                        jugadorActual.anims.play(
-                            `${jugadorActual.animacion}-move`,
-                            true
-                        );   
-                        this.numeroDado.visible = true;  
-                        this.sonidos.sound.tirarDadoSFX.volume = 1;
-                        this.sonidos.sound.tirarDadoSFX.play();      
-                    },
-                    onComplete: () => {
-                        console.log('aca')
-                        jugadorActual.tirarDado(true);
-                        this.numeroDado.setText(jugadorActual.getNumeroDelDado);
-                        this.resetTime(jugadorActual);
-                        this.textCronometro.setText(this.tiempo);
-                        this.cronometro.paused = true;
-                        this.cambiarTurnos(jugadorActual, jugadorProximo);
-                        this.btnDado.setRotation(0);
-                    },
-                });
+        this.btnDado.on("pointerdown", () => {
+            this.tweens.add({
+                targets: this.btnDado,
+                duration: 1000,
+                rotation: 360,
+                ease: "Power3",
+                repeat: 0,
+                yoyo: false,
+                onStart: () => {
+                    jugadorActual.anims.play(
+                        `${jugadorActual.animacion}-move`,
+                        true
+                    );
+                    this.numeroDado.visible = true;
+                    this.numeroDado.visible = true;
+                    this.numeroDado.visible = true;
+                    this.sonidos.sound.tirarDadoSFX.volume = 1;
+                    this.sonidos.sound.tirarDadoSFX.play();
+                    this.sonidos.sound.tirarDadoSFX.play();
+                    this.sonidos.sound.tirarDadoSFX.play();
+                },
+                onComplete: () => {
+                    jugadorActual.tirarDado(true);
+                    this.numeroDado.setText(jugadorActual.getNumeroDelDado);
+                    this.resetTime(jugadorActual);
+                    this.textCronometro.setText(this.tiempo);
+                    this.cronometro.paused = true;
+                    this.cambiarTurnos(jugadorActual, jugadorProximo);
+                    this.btnDado.setRotation(0);
+                },
             });
+        });
         const btnCerrar = new Button(
             this,
             this.sys.game.config.width - 45,
@@ -184,7 +176,7 @@ export default class Tablero extends Phaser.Scene {
             },
             0.5
         );
-        
+
         this.textName = new Text(this, this.nombreJugadorPos.x, this.nombreJugadorPos.y, this.player1.name, 20, 'bold', 0.5, "white");
         this.fotoReloj = this.add.image(this.cronometroPos.x, this.cronometroPos.y, 'reloj').setScale(1.3)
         this.textCronometro = new Text(this, this.cronometroPos.x, this.cronometroPos.y, this.player1.getTimeTurn, 20, null, 0.5, "black");
@@ -199,7 +191,7 @@ export default class Tablero extends Phaser.Scene {
             startAt: this.tiempo,
         });
 
-//POPUPS!!
+        //POPUPS!!
         this.basePopUp = this.add
             .image(0, 0, "popup_contenedor")
             .setOrigin(0.5);
@@ -208,9 +200,9 @@ export default class Tablero extends Phaser.Scene {
         this.textoTurno = this.add
             .text(0, 0 - 16, "Turno de:", { fontSize: 24, fontStyle: "bold", fontFamily: 'LSans' })
             .setOrigin(0.5);
-            this.textoTurno.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5)
+        this.textoTurno.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5)
         this.textoTurnoNombre = this.add
-            .text(0, 0 + 16, "Jugador 1", { fontSize: 20, fontFamily: 'LSans'})
+            .text(0, 0 + 16, "Jugador 1", { fontSize: 20, fontFamily: 'LSans' })
             .setOrigin(0.5);
         this.textoTurno.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
         this.textoTurnoNombre.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
@@ -221,13 +213,13 @@ export default class Tablero extends Phaser.Scene {
         );
         this.popUpContenedor.visible = false;
 
-       
+
         this.basePopUp2 = this.add
             .image(0, 0, "popup_contenedor")
             .setOrigin(0.5)
         this.textoConsecuencia = this.add
-        .text(0, 0 + 16, "Consecuencia", { fontSize: 20, fontFamily: 'LSans'})
-        .setOrigin(0.5);
+            .text(0, 0 + 16, "Consecuencia", { fontSize: 20, fontFamily: 'LSans' })
+            .setOrigin(0.5);
         this.textoConsecuencia.setShadow(3, 3, 'rgba(191, 147, 11, 1)', 5);
         this.popUpContenedorConsecuencias = this.add.container(
             this.sys.game.config.width / 2,
@@ -250,27 +242,27 @@ export default class Tablero extends Phaser.Scene {
         this.tiempo = this.initTiempo;
     }
     cambiarTurnos(player1, player2) {
-            this.btnDado.visible = false;
-            this.tiempo = 5;
-            this.textCronometro.setText(this.tiempo);
-            this.cronometro.reset({
-                delay: 1000,
-                callback: () => this.tiempoCronometroPopUp(player1, player2),
-                callbackScope: this,
-                loop: true,
-                startAt: this.tiempo,
-                paused: false,
-            });
-            player1.setIsTurn = false;
-            player2.setIsTurn = true;
-            this.textName.setText(player2.getName);
-            this.popUpContenedor.visible = true;
+        this.btnDado.visible = false;
+        this.tiempo = 5;
+        this.textCronometro.setText(this.tiempo);
+        this.cronometro.reset({
+            delay: 1000,
+            callback: () => this.tiempoCronometroPopUp(player1, player2),
+            callbackScope: this,
+            loop: true,
+            startAt: this.tiempo,
+            paused: false,
+        });
+        player1.setIsTurn = false;
+        player2.setIsTurn = true;
+        this.textName.setText(player2.getName);
+        this.popUpContenedor.visible = true;
     }
     pierdeTurno(player1, player2) {
         //Si el jugador1 pierde su turno, sigue jugando el jugador2.
         /*Verifico si el contador de turnos perdidos/acomulados es mayor o igual a 1. Y si  el jugador no se puede mover*/
         if (player1.getCountTurn >= 1 && player1.getCanMove === false) {
-            //Setteo todo de nuevo
+            //Reset de las propiedades.
             player1.setCountTurn = 0;
             player1.setCanMove = true;
 
@@ -281,7 +273,6 @@ export default class Tablero extends Phaser.Scene {
     }
     sistemaDeTurnos(player1, player2, clickOnButton = true) {
         if (player1.getIsTurn && !player2.getIsTurn) {
-            
             jugadorActual = player1;
             jugadorProximo = player2;
             //Si perdio el turno automaticamente con esta funcion, realiza un return y sigue el proximo jugador. Evitando que se ejecute el resto del bloque de este sistemaDeTurnos!
@@ -293,14 +284,9 @@ export default class Tablero extends Phaser.Scene {
             player2.setCanThrowDice = false;
 
             //Si el jugador da click, tira el dado.
-            if (clickOnButton) {
-                console.log('click')
-                return;
-            }
+            if (clickOnButton) return;
 
-            //Si no da click, se mueve uno.
             this.tweens.add({
-                
                 targets: this.btnDado,
                 duration: 1000,
                 rotation: 360,
@@ -308,8 +294,6 @@ export default class Tablero extends Phaser.Scene {
                 repeat: 0,
                 yoyo: false,
                 onStart: () => {
-                    // jugadorActual.anims.stop();
-                    console.log('no click')
                     jugadorActual.anims.play(
                         `${jugadorActual.animacion}-move`,
                         true
@@ -368,9 +352,7 @@ export default class Tablero extends Phaser.Scene {
         this.textCronometro.setText(this.tiempo);
         if (this.tiempo <= 0) {
             this.tiempo = this.initTiempo;
-            // jugadorAnterior.anims.stop();
             this.btnDado.visible = true;
-            // jugadorProximo.anims.play(`${jugadorProximo.animacion}-idle`);
             this.popUpContenedor.visible = false;
             this.cronometro.reset({
                 delay: 1000,
@@ -473,7 +455,7 @@ export default class Tablero extends Phaser.Scene {
                         );
                         setTimeout(() => {
                             this.posActual = jugadorAfectado.getPosJugador;
-                            
+
                             this.retrocederCasillas(
                                 jugadorAfectado,
                                 4,
@@ -509,5 +491,3 @@ export default class Tablero extends Phaser.Scene {
             );
     }
 }
-
-//tirar dado, moverse, usar powerUp, usarCasilla, cronometro.
