@@ -1,5 +1,4 @@
 import Button from "../js/functions/Button.js";
-import Text from "../js/functions/Text.js";
 
 let stringName = "";
 let canEdit = true;

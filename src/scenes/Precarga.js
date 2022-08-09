@@ -22,11 +22,6 @@ export default class Precarga extends Phaser.Scene {
             "public/assets/images/atlas/atlas_patos_static.png",
             "public/assets/images/atlas/atlas_patos_static.json"
         );
-        this.load.atlas(
-            "atlas_patos_spritesheet",
-            "public/assets/images/atlas/atlas_patos_spritesheet.png",
-            "public/assets/images/atlas/atlas_patos_spritesheet.json"
-        );
 
         //Sprites de personajess
         this.load.spritesheet(
