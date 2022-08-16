@@ -5,6 +5,7 @@ export default class Precarga extends Phaser.Scene {
     preload() {
         //Sprite para tests
         this.load.image("duckWhite", "public/assets/images/duck-white.png");
+        this.load.image("btn", "public/btnContainer.png");
 
         //Mapas
         this.load.tilemapTiledJSON(

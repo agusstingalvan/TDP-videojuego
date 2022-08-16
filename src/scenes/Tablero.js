@@ -419,7 +419,7 @@ export default class Tablero extends Phaser.Scene {
         const wallet = player.getWallet;
 
         player.setWallet = wallet + dineroCasilla;
-        this.textDinero.setText(`$: ${player.getWallet}`)
+        this.textDinero.setText(100)
         console.log(player.getWallet)
     }
     casillaConsecuencia(player, casillaBody) {

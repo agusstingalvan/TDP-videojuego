@@ -1,6 +1,6 @@
 import Button from "../js/functions/Button.js";
 import SoundsManage from "../js/functions/SoundsManage.js";
-
+import ButtonContainer from '../js/functions/ButtonContainer.js'
 export default class Inicio extends Phaser.Scene {
     constructor() {
         super("Inicio");
@@ -10,9 +10,9 @@ export default class Inicio extends Phaser.Scene {
 
         const sonidos = new SoundsManage(this.sound, 0.3);
         sonidos.sound.musicMain.play();
-
-
-        const btnJugar = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'botones', "boton-jugar", () => this.scene.start("SeleccionPersonajes", { sonidos }), 1.15)
+        
+        const btnJugar  = new ButtonContainer(this , this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'Jugar', () => this.scene.start("SeleccionPersonajes", { sonidos }), 1.15)
+        // const btnJugar = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'botones', "boton-jugar", () => this.scene.start("SeleccionPersonajes", { sonidos }), 1.15)
         const btnAyuda = new Button(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2 + 80, 'botones', "boton-ayuda", () => {
             this.ayudaPop.visible = true;
             btnJugar.visible = false;
