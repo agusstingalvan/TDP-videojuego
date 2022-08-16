@@ -98,6 +98,7 @@ export default class Tablero extends Phaser.Scene {
         this.players = { player1: this.player1, player2: this.player2 };
 
         this.groupCasillaConsecuencia = this.physics.add.group();
+        this.groupCasillaDinero = this.physics.add.group();
         this.casillasLayer.objects.forEach((casilla) => {
             switch (casilla.type) {
                 case "consecuencia":
@@ -106,6 +107,14 @@ export default class Tablero extends Phaser.Scene {
                         this.groupCasillaConsecuencia,
                         casilla,
                         (player, cas) => this.casillaConsecuencia(player, cas)
+                    );
+                    break;
+                case "dinero":
+                    this.crearCasilla(
+                        this.casillaInvisible,
+                        this.groupCasillaConsecuencia,
+                        casilla,
+                        (player, cas) => this.casillaDinero(player, cas)
                     );
                     break;
             }
@@ -180,7 +189,10 @@ export default class Tablero extends Phaser.Scene {
         this.textName = new Text(this, this.nombreJugadorPos.x, this.nombreJugadorPos.y, this.player1.name, 20, 'bold', 0.5, "white");
         this.fotoReloj = this.add.image(this.cronometroPos.x, this.cronometroPos.y, 'reloj').setScale(1.3)
         this.textCronometro = new Text(this, this.cronometroPos.x, this.cronometroPos.y, this.player1.getTimeTurn, 20, null, 0.5, "black");
-
+        this.posTextDinero = objectsLayers.objects.find(
+            (obj) => obj.name === "dinero"
+        );
+        this.textDinero = new Text(this, this.posTextDinero.x, this.posTextDinero.y, '$: 0', 20, 'bold', 0.5, "black");
 
         this.tiempo = this.initTiempo;
         this.cronometro = this.time.addEvent({
@@ -278,7 +290,7 @@ export default class Tablero extends Phaser.Scene {
             //Si perdio el turno automaticamente con esta funcion, realiza un return y sigue el proximo jugador. Evitando que se ejecute el resto del bloque de este sistemaDeTurnos!
             this.pierdeTurno(jugadorActual, player2);
             this.textoTurnoNombre.setText(`${player1.getName}`);
-
+            this.textDinero = player1.getWallet
             //Para que se pueda tirar el dado.
             jugadorActual.setCanThrowDice = true;
             player2.setCanThrowDice = false;
@@ -398,6 +410,17 @@ export default class Tablero extends Phaser.Scene {
     casillaVacia(player, casillaBody) {
         casillaBody.disableBody(true, true);
         console.log("VACIA");
+    }
+    casillaDinero(player, casillaBody){
+        casillaBody.disableBody(true, true);
+        this.casillaDescativadaOverlap = casillaBody;
+        
+        const dineroCasilla = 300;
+        const wallet = player.getWallet;
+
+        player.setWallet = wallet + dineroCasilla;
+        this.textDinero.setText(`$: ${player.getWallet}`)
+        console.log(player.getWallet)
     }
     casillaConsecuencia(player, casillaBody) {
         /*

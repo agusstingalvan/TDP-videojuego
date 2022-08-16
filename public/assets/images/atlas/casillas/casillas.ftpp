@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "version": "0.6.7"
+  },
+  "savePath": "C:\\Users\\aguss\\Desktop\\unraf\\TDP-videojuego\\public\\assets\\images\\atlas\\casillas",
+  "images": [
+    {
+      "name": "casilla-dinero.png",
+      "path": "C:/Users/aguss/Desktop/TexturePacker/casilla-dinero.png",
+      "folder": ""
+    },
+    {
+      "name": "casilla-plantaredonda.png",
+      "path": "C:/Users/aguss/Desktop/TexturePacker/casilla-plantaredonda.png",
+      "folder": ""
+    },
+    {
+      "name": "casilla-pregunta.png",
+      "path": "C:/Users/aguss/Desktop/TexturePacker/casilla-pregunta.png",
+      "folder": ""
+    },
+    {
+      "name": "plataforma-tortuga.png",
+      "path": "C:/Users/aguss/Desktop/TexturePacker/plataforma-tortuga.png",
+      "folder": ""
+    }
+  ],
+  "folders": [],
+  "packOptions": {
+    "textureName": "atlas_casillas",
+    "textureFormat": "png",
+    "removeFileExtension": true,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "C:\\Users\\aguss\\Desktop\\unraf\\TDP-videojuego\\public\\assets\\images\\atlas\\casillas",
+    "width": 256,
+    "height": 64,
+    "fixedSize": false,
+    "powerOfTwo": false,
+    "padding": 0,
+    "extrude": 0,
+    "allowRotation": false,
+    "allowTrim": false,
+    "trimMode": "trim",
+    "alphaThreshold": "0",
+    "detectIdentical": true,
+    "packer": "MaxRectsBin",
+    "packerMethod": "BestShortSideFit"
+  }
+}
