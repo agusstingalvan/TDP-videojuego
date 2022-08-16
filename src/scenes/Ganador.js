@@ -9,9 +9,6 @@ export default class Ganador extends Phaser.Scene {
     init(data) {
         this.ganador = data.getName;
     }
-    preload() {
-
-    }
     create() {
         this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds', "fondo-ganador");
         this.textName = new Text(this, this.sys.game.config.width / 2, this.sys.game.config.height / 2 - 220, this.ganador, 20, 'bold', 0.5, "white");
