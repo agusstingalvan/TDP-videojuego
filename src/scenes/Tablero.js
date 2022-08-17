@@ -290,7 +290,7 @@ export default class Tablero extends Phaser.Scene {
             //Si perdio el turno automaticamente con esta funcion, realiza un return y sigue el proximo jugador. Evitando que se ejecute el resto del bloque de este sistemaDeTurnos!
             this.pierdeTurno(jugadorActual, player2);
             this.textoTurnoNombre.setText(`${player1.getName}`);
-            this.textDinero = player1.getWallet
+            this.textDinero.setText(`$: ${player1.getWallet}`)
             //Para que se pueda tirar el dado.
             jugadorActual.setCanThrowDice = true;
             player2.setCanThrowDice = false;
@@ -419,7 +419,7 @@ export default class Tablero extends Phaser.Scene {
         const wallet = player.getWallet;
 
         player.setWallet = wallet + dineroCasilla;
-        this.textDinero.setText(100)
+        this.textDinero.setText(`$: ${player.getWallet}`);
         console.log(player.getWallet)
     }
     casillaConsecuencia(player, casillaBody) {
