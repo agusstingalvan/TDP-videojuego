@@ -28,7 +28,7 @@ export default class SeleccionPersonajes extends Phaser.Scene {
         this.sonidos = data.sonidos;
     }
     create() {
-        this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds', "fondo-seleccionPersonajes");
+        this.background = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'atlas_backgrounds', "fondo-seleccionPersonajes");
         for (let player in players) {
             let playerObj = players[player];
             let { x, y, name, color, texture } = playerObj;
@@ -52,19 +52,17 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             this.sonidos.sound.musicMain.stop()
         });
     }
-
     createInputs(nameText, playerObj) {
         let btnEdit, btnReady;
         btnEdit = this.add
             .image(nameText.x + 80, 370, "lapizEdit")
             .setOrigin(0.5)
-            .setInteractive();
+            .setInteractive({ useHandCursor: true });
         btnReady = this.add
             .image(nameText.x + 80, 370, "btnCheck")
             .setOrigin(0.5)
-            .setInteractive();
-        btnReady.visible = false;
-
+            .setInteractive({ useHandCursor: true });
+        btnReady.visible = false;     
         btnEdit.on("pointerdown", () => {
             //Primero verifico si no hay ningun otro editandoce.
             if (!canEdit) return;
@@ -75,7 +73,17 @@ export default class SeleccionPersonajes extends Phaser.Scene {
             window.addEventListener("keydown", writeName);
             btnEdit.visible = false;
             btnReady.visible = true;
-        });
+            this.background.setInteractive().on("pointerdown", ()=>{
+                canEdit = true;
+                btnEdit.visible = true;
+                btnReady.visible = false;
+                nameText.setColor("white");
+                window.removeEventListener("keydown", writeName);
+                if (nameText.text === "Escriba...") {
+                    nameText.setText(playerObj.name);
+                }
+                });
+            });
         btnReady.on("pointerdown", () => {
             canEdit = true;
             btnEdit.visible = true;

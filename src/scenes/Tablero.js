@@ -33,6 +33,7 @@ export default class Tablero extends Phaser.Scene {
     }
     init(data) {
         this.players = data.players;
+        console.log(this.players)
         this.sonidos = data.sonidos;
         this.player1 = this.players.player1;
         this.player2 = this.players.player2;
@@ -186,7 +187,7 @@ export default class Tablero extends Phaser.Scene {
             0.5
         );
 
-        this.textName = new Text(this, this.nombreJugadorPos.x, this.nombreJugadorPos.y, this.player1.name, 20, 'bold', 0.5, "white");
+        this.textName = new Text(this, this.nombreJugadorPos.x, this.nombreJugadorPos.y, this.player1.getName, 20, 'bold', 0.5, "white");
         this.fotoReloj = this.add.image(this.cronometroPos.x, this.cronometroPos.y, 'reloj').setScale(1.3)
         this.textCronometro = new Text(this, this.cronometroPos.x, this.cronometroPos.y, this.player1.getTimeTurn, 20, null, 0.5, "black");
         this.posTextDinero = objectsLayers.objects.find(
